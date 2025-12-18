@@ -10,7 +10,7 @@ public class AcademicEventImpl implements AcademicEventService {
 
     private final AcademicEventRepository repo;
 
-    public AcademicEventServiceImpl(AcademicEventRepository repo) {
+    public AcademicEventImpl(AcademicEventRepository repo) {
         this.repo = repo;
     }
 
