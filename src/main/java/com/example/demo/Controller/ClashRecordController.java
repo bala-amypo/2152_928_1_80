@@ -42,7 +42,7 @@ public class ClashRecordController {
 
     // GET CLASHES FOR EVENT
     @GetMapping("/event/{eventId}")
-    public List<ClashRecord> getClashesForEvent(@PathVariable Long eventId) {
+    public List<ClashRecordEntity> getClashesForEvent(@PathVariable Long eventId) {
         return clashService.getClashesForEvent(eventId);
     }
 }

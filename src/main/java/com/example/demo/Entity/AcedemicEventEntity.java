@@ -1,6 +1,4 @@
-AcademicEvent.java
-
- package com.example.demo.entity;
+package com.example.demo.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

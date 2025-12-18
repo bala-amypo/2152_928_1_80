@@ -1,12 +1,10 @@
-UserAccountController.java
-
-package com.example.demo.controller;
+package com.example.demo.Controller;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.UserAccount;
-import com.example.demo.service.UserAccountService;
+import com.example.demo.Entity.UserAccountEntity;
+import com.example.demo.Service.UserAccountService;
 
 @RestController
 @RequestMapping("/api/users")
@@ -20,25 +18,25 @@ public class UserAccountController {
 
     // REGISTER USER
     @PostMapping("/register")
-    public UserAccount registerUser(@RequestBody UserAccount user) {
+    public UserAccountentity registerUser(@RequestBody UserAccountEntity user) {
         return userService.register(user);
     }
 
     // GET ALL USERS
     @GetMapping
-    public List<UserAccount> getAllUsers() {
+    public List<UserAccountEntity> getAllUsers() {
         return userService.getAllUsers();
     }
 
     // GET USER BY ID
     @GetMapping("/{id}")
-    public UserAccount getUserById(@PathVariable Long id) {
+    public UserAccountEntity getUserById(@PathVariable Long id) {
         return userService.getUser(id);
     }
 
     // GET USER BY EMAIL
     @GetMapping("/email/{email}")
-    public UserAccount getUserByEmail(@PathVariable String email) {
+    public UserAccountEntity getUserByEmail(@PathVariable String email) {
         return userService.findByEmail(email);
     }
 }
