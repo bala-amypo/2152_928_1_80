@@ -1,18 +1,16 @@
-EventMergeService.java
-
-package com.example.demo.service;
+package com.example.demo.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import com.example.demo.entity.EventMergeRecord;
+import com.example.demo.Entity.EventMergeRecordEntity;
 
 public interface EventMergeService {
 
-    EventMergeRecord mergeEvents(List<Long> eventIds, String reason);
+    EventMergeRecordEntity mergeEvents(List<Long> eventIds, String reason);
 
-    EventMergeRecord getMergeRecordById(Long id);
+    EventMergeRecordEntity getMergeRecordById(Long id);
 
-    List<EventMergeRecord> getAllMergeRecords();
+    List<EventMergeRecordEntity> getAllMergeRecords();
 
-    List<EventMergeRecord> getMergeRecordsByDate(LocalDate start, LocalDate end);
+    List<EventMergeRecordEntity> getMergeRecordsByDate(LocalDate start, LocalDate end);
 }

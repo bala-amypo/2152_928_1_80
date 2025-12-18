@@ -1,18 +1,16 @@
-HarmonizedCalendarSevice.java
-
-package com.example.demo.service;
+package com.example.demo.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import com.example.demo.entity.HarmonizedCalendar;
+import com.example.demo.Entity.HarmonizedCalendarEntity;
 
 public interface HarmonizedCalendarService {
 
-    HarmonizedCalendar generateHarmonizedCalendar(String title, String generatedBy);
+    HarmonizedCalendarEntity generateHarmonizedCalendar(String title, String generatedBy);
 
-    HarmonizedCalendar getCalendarById(Long id);
+    HarmonizedCalendarEntity getCalendarById(Long id);
 
-    List<HarmonizedCalendar> getAllCalendars();
+    List<HarmonizedCalendarEntity> getAllCalendars();
 
-    List<HarmonizedCalendar> getCalendarsWithinRange(LocalDate start, LocalDate end);
+    List<HarmonizedCalendarEntity> getCalendarsWithinRange(LocalDate start, LocalDate end);
 }

@@ -1,12 +1,10 @@
-BranchProfileServiceImpl.java
-
-package com.example.demo.service;
+package com.example.demo.Service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import com.example.demo.entity.BranchProfile;
+import com.example.demo.Entity.BranchProfileEntity;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.BranchProfileRepository;
+import com.example.demo.Repository.BranchProfileRepository;
 
 @Service
 public class BranchProfileServiceImpl implements BranchProfileService {
@@ -18,7 +16,7 @@ public class BranchProfileServiceImpl implements BranchProfileService {
     }
 
     @Override
-    public BranchProfile createBranch(BranchProfile branch) {
+    public BranchProfileEntity createBranch(BranchProfileEntity branch) {
         return repo.save(branch);
     }
 
