@@ -1,6 +1,4 @@
-UserAccountServiceImpl.java
-
-package com.example.demo.service;
+package com.example.demo.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
