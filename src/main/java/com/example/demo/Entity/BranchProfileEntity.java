@@ -1,12 +1,10 @@
-BranchProfile.java 
-
-package com.example.demo.entity;
+package com.example.demo.Entity;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
-public class BranchProfile {
+public class BranchProfileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +19,11 @@ public class BranchProfile {
     private LocalDateTime lastSyncAt;
 
     // ✅ No-args constructor
-    public BranchProfile() {
+    public BranchProfileEntity() {
     }
 
     // ✅ All-args constructor
-    public BranchProfile(Long id, String branchCode, String branchName,
-                         String contactEmail, boolean active, LocalDateTime lastSyncAt) {
+    public BranchProfileEntity(Long id, String branchCode, String branchName,String contactEmail, boolean active, LocalDateTime lastSyncAt) {
         this.id = id;
         this.branchCode = branchCode;
         this.branchName = branchName;
@@ -42,21 +39,45 @@ public class BranchProfile {
     }
 
     // getters & setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() { 
+        return id; 
+    }
+    public void setId(Long id) { 
+        this.id = id; 
+    }
 
-    public String getBranchCode() { return branchCode; }
-    public void setBranchCode(String branchCode) { this.branchCode = branchCode; }
+    public String getBranchCode() { 
+        return branchCode; 
+    }
+    public void setBranchCode(String branchCode) { 
+        this.branchCode = branchCode; 
+    }
 
-    public String getBranchName() { return branchName; }
-    public void setBranchName(String branchName) { this.branchName = branchName; }
+    public String getBranchName() { 
+        return branchName; 
+    }
+    public void setBranchName(String branchName) { 
+        this.branchName = branchName; 
+    }
 
-    public String getContactEmail() { return contactEmail; }
-    public void setContactEmail(String contactEmail) { this.contactEmail = contactEmail; }
+    public String getContactEmail() { 
+        return contactEmail; 
+    }
+    public void setContactEmail(String contactEmail) { 
+        this.contactEmail = contactEmail; 
+    }
 
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    public boolean isActive() { 
+        return active; 
+    }
+    public void setActive(boolean active) { 
+        this.active = active; 
+    }
 
-    public LocalDateTime getLastSyncAt() { return lastSyncAt; }
-    public void setLastSyncAt(LocalDateTime lastSyncAt) { this.lastSyncAt = lastSyncAt; }
+    public LocalDateTime getLastSyncAt() { 
+        return lastSyncAt; 
+    }
+    public void setLastSyncAt(LocalDateTime lastSyncAt) { 
+        this.lastSyncAt = lastSyncAt; 
+    }
 }
