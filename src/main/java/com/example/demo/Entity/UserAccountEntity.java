@@ -1,12 +1,10 @@
-UserAccount.java
-
-package com.example.demo.entity;
+package com.example.demo.Entity;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
-public class UserAccount {
+public class UserAccountEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +20,10 @@ public class UserAccount {
     private String department;
     private LocalDateTime createdAt;
 
-    public UserAccount() {
+    public UserAccountEntity() {
     }
 
-    public UserAccount(Long id, String fullName, String email, String password,
+    public UserAccountEntity(Long id, String fullName, String email, String password,
                        String role, String department, LocalDateTime createdAt) {
         this.id = id;
         this.fullName = fullName;

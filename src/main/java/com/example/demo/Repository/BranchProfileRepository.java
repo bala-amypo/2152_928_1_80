@@ -1,12 +1,10 @@
-BranchProfileRepository.java
-
-package com.example.demo.repository;
+package com.example.demo.Repository;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.entity.BranchProfile;
+import com.example.demo.Entity.BranchProfileEntity;
 
-public interface BranchProfileRepository extends JpaRepository<BranchProfile, Long> {
+public interface BranchProfileRepository extends JpaRepository<BranchProfileEntity, Long> {
 
-    Optional<BranchProfile> findByBranchCode(String branchCode);
+    Optional<BranchProfileEntity> findByBranchCode(String branchCode);
 }

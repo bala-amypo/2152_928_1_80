@@ -1,13 +1,11 @@
-HarmonizedCalendar.java
-
-package com.example.demo.entity;
+package com.example.demo.Entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
-public class HarmonizedCalendar {
+public class HarmonizedCalendarEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +20,10 @@ public class HarmonizedCalendar {
     @Column(columnDefinition = "TEXT")
     private String eventsJson;
 
-    public HarmonizedCalendar() {
+    public HarmonizedCalendarEntity() {
     }
 
-    public HarmonizedCalendar(Long id, String title, String generatedBy,
-                              LocalDateTime generatedAt,
-                              LocalDate effectiveFrom, LocalDate effectiveTo,
-                              String eventsJson) {
+    public HarmonizedCalendarEntity(Long id, String title, String generatedBy,LocalDateTime generatedAt,LocalDate effectiveFrom, LocalDate effectiveTo,String eventsJson) {
         this.id = id;
         this.title = title;
         this.generatedBy = generatedBy;

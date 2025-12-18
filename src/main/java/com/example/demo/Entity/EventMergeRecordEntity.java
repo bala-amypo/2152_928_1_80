@@ -1,13 +1,11 @@
-EventMergeRecord.java
-
-package com.example.demo.entity;
+package com.example.demo.Entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
-public class EventMergeRecord {
+public class EventMergeRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +18,10 @@ public class EventMergeRecord {
     private String mergeReason;
     private LocalDateTime createdAt;
 
-    public EventMergeRecord() {
+    public EventMergeRecordEntity() {
     }
 
-    public EventMergeRecord(Long id, String sourceEventIds, String mergedTitle,
-                            LocalDate mergedStartDate, LocalDate mergedEndDate,
-                            String mergeReason, LocalDateTime createdAt) {
+    public EventMergeRecordEntity(Long id, String sourceEventIds, String mergedTitle,LocalDate mergedStartDate, LocalDate mergedEndDate,String mergeReason, LocalDateTime createdAt) {
         this.id = id;
         this.sourceEventIds = sourceEventIds;
         this.mergedTitle = mergedTitle;

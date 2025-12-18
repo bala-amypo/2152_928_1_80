@@ -1,14 +1,12 @@
-ClashRecordRepository.java
-
-package com.example.demo.repository;
+package com.example.demo.Repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.entity.ClashRecord;
+import com.example.demo.Entity.ClashRecordEntity;
 
-public interface ClashRecordRepository extends JpaRepository<ClashRecord, Long> {
+public interface ClashRecordRepository extends JpaRepository<ClashRecordEntity, Long> {
 
-    List<ClashRecord> findByEventId(Long eventId);
+    List<ClashRecordEntity> findByEventId(Long eventId);
 
-    List<ClashRecord> findByResolvedFalse();
+    List<ClashRecordEntity> findByResolvedFalse();
 }
