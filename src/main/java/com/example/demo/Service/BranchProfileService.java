@@ -23,25 +23,25 @@ public class BranchProfileServiceImpl implements BranchProfileService {
     }
 
     @Override
-    public BranchProfile updateBranchStatus(Long id, boolean active) {
-        BranchProfile branch = getBranchById(id);
+    public BranchProfileEntity updateBranchStatus(Long id, boolean active) {
+        BranchProfileEntity branch = getBranchById(id);
         branch.setActive(active);
         return repo.save(branch);
     }
 
     @Override
-    public List<BranchProfile> getAllBranches() {
+    public List<BranchProfileEntity> getAllBranches() {
         return repo.findAll();
     }
 
     @Override
-    public BranchProfile getBranchById(Long id) {
+    public BranchProfileEntity getBranchById(Long id) {
         return repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Branch not found"));
     }
 
     @Override
-    public BranchProfile findByBranchCode(String branchCode) {
+    public BranchProfileEntity findByBranchCode(String branchCode) {
         return repo.findByBranchCode(branchCode)
                 .orElseThrow(() -> new ResourceNotFoundException("Branch code not found"));
     }
