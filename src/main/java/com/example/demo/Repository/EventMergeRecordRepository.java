@@ -1,15 +1,13 @@
-EventMergeRecordRepository.java
-
-package com.example.demo.repository;
+package com.example.demo.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.entity.EventMergeRecord;
+import com.example.demo.Entity.EventMergeRecordEntity;
 
 public interface EventMergeRecordRepository
-        extends JpaRepository<EventMergeRecord, Long> {
+        extends JpaRepository<EventMergeRecordEntity, Long> {
 
-    List<EventMergeRecord> findByCreatedAtBetween(
+    List<EventMergeRecordEntity> findByCreatedAtBetween(
             LocalDateTime start, LocalDateTime end);
 }

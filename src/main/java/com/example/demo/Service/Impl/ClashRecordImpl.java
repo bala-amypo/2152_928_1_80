@@ -1,12 +1,10 @@
-ClashDetectionServiceImpl.java
-
-package com.example.demo.service;
+package com.example.demo.Service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import com.example.demo.entity.ClashRecord;
+import com.example.demo.Entity.ClashRecordEntity;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.ClashRecordRepository;
+import com.example.demo.Repository.ClashRecordRepository;
 
 @Service
 public class ClashDetectionServiceImpl implements ClashDetectionService {
@@ -18,13 +16,13 @@ public class ClashDetectionServiceImpl implements ClashDetectionService {
     }
 
     @Override
-    public ClashRecord logClash(ClashRecord clash) {
+    public ClashRecordEntity logClash(ClashRecordEntity clash) {
         clash.setResolved(false);
         return repo.save(clash);
     }
 
     @Override
-    public ClashRecord resolveClash(Long id) {
+    public ClashRecordEntity resolveClash(Long id) {
         ClashRecord clash = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Clash not found"));
         clash.setResolved(true);
