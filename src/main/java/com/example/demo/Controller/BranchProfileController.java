@@ -1,12 +1,10 @@
-BranchProfileController.java
-
-package com.example.demo.controller;
+package com.example.demo.Controller;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.BranchProfile;
-import com.example.demo.service.BranchProfileService;
+import com.example.demo.Entity.BranchProfileEntity;
+import com.example.demo.Service.BranchProfileService;
 
 @RestController
 @RequestMapping("/api/branches")
@@ -20,14 +18,13 @@ public class BranchProfileController {
 
     // CREATE BRANCH
     @PostMapping
-    public BranchProfile createBranch(@RequestBody BranchProfile branch) {
+    public BranchProfileEntity createBranch(@RequestBody BranchProfileEntity branch) {
         return branchService.createBranch(branch);
     }
 
     // UPDATE BRANCH STATUS
     @PutMapping("/{id}/status")
-    public BranchProfile updateStatus(@PathVariable Long id,
-                                      @RequestParam boolean active) {
+    public BranchProfileEntity updateStatus(@PathVariable Long id,@RequestParam boolean active) {
         return branchService.updateBranchStatus(id, active);
     }
 
@@ -39,13 +36,13 @@ public class BranchProfileController {
 
     // GET BRANCH BY ID
     @GetMapping("/{id}")
-    public BranchProfile getBranchById(@PathVariable Long id) {
+    public BranchProfileEntity getBranchById(@PathVariable Long id) {
         return branchService.getBranchById(id);
     }
 
     // GET BRANCH BY CODE
     @GetMapping("/code/{branchCode}")
-    public BranchProfile getByBranchCode(@PathVariable String branchCode) {
+    public BranchProfileEntity getByBranchCode(@PathVariable String branchCode) {
         return branchService.findByBranchCode(branchCode);
     }
 }

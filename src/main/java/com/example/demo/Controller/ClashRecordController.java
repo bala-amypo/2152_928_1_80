@@ -1,12 +1,10 @@
-ClashRecordController.java
-
-package com.example.demo.controller;
+package com.example.demo.Controller;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.ClashRecord;
-import com.example.demo.service.ClashDetectionService;
+import com.example.demo.Entity.ClashRecordEntity;
+import com.example.demo.Service.ClashDetectionService;
 
 @RestController
 @RequestMapping("/api/clashes")
@@ -20,25 +18,25 @@ public class ClashRecordController {
 
     // LOG CLASH
     @PostMapping
-    public ClashRecord logClash(@RequestBody ClashRecord clash) {
+    public ClashRecordEntity logClash(@RequestBody ClashRecordEntity clash) {
         return clashService.logClash(clash);
     }
 
     // RESOLVE CLASH
     @PutMapping("/{id}/resolve")
-    public ClashRecord resolveClash(@PathVariable Long id) {
+    public ClashRecordEntity resolveClash(@PathVariable Long id) {
         return clashService.resolveClash(id);
     }
 
     // GET ALL CLASHES
     @GetMapping
-    public List<ClashRecord> getAllClashes() {
+    public List<ClashRecordEntity> getAllClashes() {
         return clashService.getAllClashes();
     }
 
     // GET UNRESOLVED CLASHES
     @GetMapping("/unresolved")
-    public List<ClashRecord> getUnresolvedClashes() {
+    public List<ClashRecordEntity> getUnresolvedClashes() {
         return clashService.getUnresolvedClashes();
     }
 
