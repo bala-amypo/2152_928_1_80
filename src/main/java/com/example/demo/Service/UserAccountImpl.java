@@ -18,7 +18,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public UserAccountEntity register(UserAccountEntity user) {
         
-        user.setCreatedAt(LocalDateTime.now());
         return repo.save(user);
     }
 
