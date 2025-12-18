@@ -18,7 +18,7 @@ public class AcademicEventController {
 
     // CREATE EVENT
     @PostMapping
-    public AcademicEvent createEvent(@RequestBody AcademicEventEntity event) {
+    public AcademicEventEntity createEvent(@RequestBody AcademicEventEntity event) {
         return eventService.createEvent(event);
     }
 
