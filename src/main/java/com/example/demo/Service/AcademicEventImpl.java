@@ -3,12 +3,10 @@ package com.example.demo.Service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.Entity.AcademicEventEntity;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ValidationException;
 import com.example.demo.Repository.AcademicEventRepository;
 
 @Service
-public class AcademicEventServiceImpl implements AcademicEventService {
+public class AcademicEventImpl implements AcademicEventService {
 
     private final AcademicEventRepository repo;
 
