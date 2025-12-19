@@ -15,6 +15,12 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccountServiceImpl(UserAccountRepository repository) {
         this.repository = repository;
     }
+    @Override
+    public void updateUserStatus(Long id, boolean active) {
+    UserAccountEntity user = repo.findById(id).orElseThrow();
+    user.setActive(active);
+    repo.save(user);
+}
 
     public UserAccountEntity register(UserAccountEntity user) {
         if (repository.existsByEmail(user.getEmail())) {
@@ -40,5 +46,9 @@ public class UserAccountServiceImpl implements UserAccountService {
         return user;
     }
 }
+
+
+
+
 
 

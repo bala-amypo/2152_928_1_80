@@ -13,3 +13,5 @@ public interface UserAccountService {
     UserAccountEntity getUserById(Long id);
     void updateUserStatus(Long id, boolean active);
 }
+
+
