@@ -16,9 +16,9 @@ public class AcademicEventImpl implements AcademicEventService {
 
     @Override
     public AcademicEventEntity createEvent(AcademicEventEntity event) {
-        if (event.getStartDate().isAfter(event.getEndDate())) {
-            throw new ValidationException("Start date must be before end date");
-        }
+       // if (event.getStartDate().isAfter(event.getEndDate())) {
+         //   throw new ValidationException("Start date must be before end date");
+        //}
         return repo.save(event);
     }
 
