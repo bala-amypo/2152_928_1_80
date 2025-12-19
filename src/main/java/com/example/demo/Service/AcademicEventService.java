@@ -15,3 +15,4 @@ public interface AcademicEventService {
 
     List<AcademicEventEntity> getEventsByBranch(Long branchId);
 }
+

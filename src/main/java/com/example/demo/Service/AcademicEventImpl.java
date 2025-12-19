@@ -49,3 +49,7 @@ public class AcademicEventImpl implements AcademicEventService {
         return repo.findByBranchId(branchId);
     }
 }
+@Override
+public AcademicEventEntity getEventById(Long id) {
+    return academicEventRepository.findById(id).orElse(null);
+}
