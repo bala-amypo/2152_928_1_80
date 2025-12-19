@@ -53,3 +53,5 @@ public class AcademicEventServiceImpl implements AcademicEventService {
         return repository.findAll();
     }
 }
+
+
