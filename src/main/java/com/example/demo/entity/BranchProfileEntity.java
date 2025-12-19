@@ -20,6 +20,9 @@ public class BranchProfileEntity {
     @Column(nullable = false)
     private boolean active = true;
 
+    // Add this missing field
+    private LocalDateTime lastSyncAt;
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -33,18 +36,11 @@ public class BranchProfileEntity {
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
 
-    public LocalDateTime getLastSyncAt() {
-        return lastSyncAt;
-    }
-
-    public void setLastSyncAt(LocalDateTime lastSyncAt) {
-        this.lastSyncAt = lastSyncAt;
-    }
+    public LocalDateTime getLastSyncAt() { return lastSyncAt; }
+    public void setLastSyncAt(LocalDateTime lastSyncAt) { this.lastSyncAt = lastSyncAt; }
 
     @PrePersist
     void onCreate() {
         lastSyncAt = LocalDateTime.now();
     }
-
-    
 }
