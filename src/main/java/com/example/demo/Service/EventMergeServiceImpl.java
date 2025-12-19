@@ -18,7 +18,7 @@ public class EventMergeServiceImpl implements EventMergeService {
 
     @Override
     public EventMergeRecordEntity mergeEvents(List<Long> eventIds, String reason) {
-        EventMergeRecordEntity record = new EventMergeRecord();
+        EventMergeRecordEntity record = new EventMergeService();
         record.setSourceEventIds(eventIds.toString());
         record.setMergeReason(reason);
         record.setCreatedAt(LocalDateTime.now());
