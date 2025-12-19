@@ -42,3 +42,10 @@ public class EventMergeServiceImpl implements EventMergeService {
 }
 
 
+EventMergeRecordEntity record = new EventMergeRecordEntity();
+
+record.setCreatedAt(LocalDateTime.now());
+record.setSourceEventId(1L);
+record.setTargetEventId(2L);
+
+eventMergeRecordRepository.save(record);

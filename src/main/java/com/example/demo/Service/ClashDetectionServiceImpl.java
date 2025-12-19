@@ -21,9 +21,9 @@ public class ClashDetectionServiceImpl implements ClashDetectionService {
     }
 
     @Override
-public ClashRecordEntity resolveClash(Long id) {
-    return new ClashRecordEntity(); // placeholder
-}
+    public ClashRecordEntity resolveClash(Long id) {
+        return new ClashRecordEntity(); // placeholder
+    }
 
 
 
@@ -42,7 +42,5 @@ public ClashRecordEntity resolveClash(Long id) {
         return repo.findAll();
     }
 }
-@Override
-public ClashRecordEntity resolveClash(Long id) {
-    return new ClashRecordEntity(); // placeholder
-}
+
+
