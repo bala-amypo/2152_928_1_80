@@ -18,7 +18,7 @@ public class EventMergeServiceImpl implements EventMergeService {
 
     @Override
     public EventMergeRecordEntity mergeEvents(List<Long> eventIds, String reason) {
-        EventMergeRecordEntity record = new EventMergeService();
+        //EventMergeRecordEntity record = new EventMergeService();
         record.setSourceEventIds(eventIds.toString());
         record.setMergeReason(reason);
         record.setCreatedAt(LocalDateTime.now());
@@ -38,5 +38,14 @@ public class EventMergeServiceImpl implements EventMergeService {
     @Override
     public List<EventMergeRecordEntity> getMergeRecordsByDate(LocalDate start, LocalDate end) {
         return repo.findByCreatedAtBetween(start.atStartOfDay(), end.atTime(23,59));
+    }
+}
+@Service
+public class EventMergeServiceImpl {
+
+    private final EventMergeService eventMergeService;
+
+    public EventMergeServiceImpl(EventMergeService eventMergeService) {
+        this.eventMergeService = eventMergeService;
     }
 }
