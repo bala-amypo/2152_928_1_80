@@ -13,5 +13,5 @@ public interface BranchProfileService {
 
     BranchProfileEntity getBranchById(Long id);
 
-    BranchProfile findByBranchCode(String branchCode);
+    BranchProfileEntity findByBranchCode(String branchCode);
 }

@@ -30,7 +30,7 @@ public class BranchProfileController {
 
     // GET ALL BRANCHES
     @GetMapping
-    public List<BranchProfile> getAllBranches() {
+    public List<BranchProfileEntity> getAllBranches() {
         return branchService.getAllBranches();
     }
 

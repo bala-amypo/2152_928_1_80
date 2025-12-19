@@ -18,7 +18,7 @@ public class UserAccountController {
 
     // REGISTER USER
     @PostMapping("/register")
-    public UserAccountentity registerUser(@RequestBody UserAccountEntity user) {
+    public UserAccountEntity registerUser(@RequestBody UserAccountEntity user) {
         return userService.register(user);
     }
 
