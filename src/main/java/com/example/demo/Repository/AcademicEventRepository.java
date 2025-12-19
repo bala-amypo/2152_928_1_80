@@ -1,10 +1,11 @@
-package com.example.demo.Repository;
+package com.example.demo.repository;
 
-import java.util.List;
+import com.example.demo.entity.AcademicEventEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.Entity.AcademicEventEntity;
+import java.util.List;
 
-public interface AcademicEventRepository extends JpaRepository<AcademicEventEntity, Long> {
+public interface AcademicEventRepository
+        extends JpaRepository<AcademicEventEntity, Long> {
 
     List<AcademicEventEntity> findByBranchId(Long branchId);
 }

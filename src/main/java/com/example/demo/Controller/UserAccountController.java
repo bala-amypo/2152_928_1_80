@@ -1,42 +1,34 @@
-package com.example.demo.Controller;
+package com.example.demo.controller;
 
-import java.util.List;
+import com.example.demo.entity.UserAccountEntity;
+import com.example.demo.service.UserAccountService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.demo.Entity.UserAccountEntity;
-import com.example.demo.Service.UserAccountService;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/auth")
+@Tag(name = "Authentication")
 public class UserAccountController {
 
-    private final UserAccountService userService;
+    private final UserAccountService service;
 
-    public UserAccountController(UserAccountService userService) {
-        this.userService = userService;
+    public UserAccountController(UserAccountService service) {
+        this.service = service;
     }
 
-    // REGISTER USER
     @PostMapping("/register")
-    public UserAccountEntity registerUser(@RequestBody UserAccountEntity user) {
-        return userService.register(user);
+    public UserAccountEntity register(@RequestBody UserAccountEntity user) {
+        return service.register(user);
     }
 
-    // GET ALL USERS
-    @GetMapping
-    public List<UserAccountEntity> getAllUsers() {
-        return userService.getAllUsers();
+    @GetMapping("/users")
+    public List<UserAccountEntity> users() {
+        return service.getAllUsers();
     }
 
-    // GET USER BY ID
-    @GetMapping("/{id}")
-    public UserAccountEntity getUserById(@PathVariable Long id) {
-        return userService.getUser(id);
-    }
-
-    // GET USER BY EMAIL
-    @GetMapping("/email/{email}")
-    public UserAccountEntity getUserByEmail(@PathVariable String email) {
-        return userService.findByEmail(email);
+    @GetMapping("/users/{id}")
+    public UserAccountEntity user(@PathVariable Long id) {
+        return service.getUser(id);
     }
 }

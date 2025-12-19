@@ -1,41 +1,47 @@
-package com.example.demo.Service;
+package com.example.demo.serviceimpl;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import com.example.demo.entity.UserAccountEntity;
+import com.example.demo.exception.*;
+import com.example.demo.repository.UserAccountRepository;
+import com.example.demo.service.UserAccountService;
 import org.springframework.stereotype.Service;
-import com.example.demo.Entity.UserAccountEntity;
-import com.example.demo.Repository.UserAccountRepository;
+import java.util.List;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private final UserAccountRepository repo;
+    private final UserAccountRepository repository;
 
-    public UserAccountServiceImpl(UserAccountRepository repo) {
-        this.repo = repo;
+    public UserAccountServiceImpl(UserAccountRepository repository) {
+        this.repository = repository;
     }
-    UserAccountEntity user = userRepository.findById(id);
-
 
     @Override
     public UserAccountEntity register(UserAccountEntity user) {
-        
-        return repo.save(user);
+        if (repository.existsByEmail(user.getEmail())) {
+            throw new ValidationException("Email already exists");
+        }
+        return repository.save(user);
     }
 
     @Override
     public UserAccountEntity getUser(Long id) {
-        return repo.findById(id);
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
     }
 
     @Override
     public List<UserAccountEntity> getAllUsers() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     @Override
     public UserAccountEntity findByEmail(String email) {
-        return repo.findByEmail(email);
+        UserAccountEntity user = repository.findByEmail(email);
+        if (user == null) {
+            throw new ResourceNotFoundException("User not found");
+        }
+        return user;
     }
 }
-
