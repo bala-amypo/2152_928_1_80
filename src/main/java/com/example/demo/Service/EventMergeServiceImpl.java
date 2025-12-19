@@ -40,12 +40,5 @@ public class EventMergeServiceImpl implements EventMergeService {
         return repo.findByCreatedAtBetween(start.atStartOfDay(), end.atTime(23,59));
     }
 }
-@Service
-public class EventMergeServiceImpl {
 
-    private final EventMergeService eventMergeService;
 
-    public EventMergeServiceImpl(EventMergeService eventMergeService) {
-        this.eventMergeService = eventMergeService;
-    }
-}
