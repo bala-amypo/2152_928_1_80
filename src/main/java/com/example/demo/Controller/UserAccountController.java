@@ -2,13 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.UserAccountEntity;
 import com.example.demo.service.UserAccountService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/auth")
-@Tag(name = "Authentication")
+@RequestMapping("/api/users")
 public class UserAccountController {
 
     private final UserAccountService service;
@@ -17,18 +18,27 @@ public class UserAccountController {
         this.service = service;
     }
 
-    @PostMapping("/register")
-    public UserAccountEntity register(@RequestBody UserAccountEntity user) {
-        return service.register(user);
+    @PostMapping
+    public ResponseEntity<UserAccountEntity> create(
+            @Valid @RequestBody UserAccountEntity user) {
+        return ResponseEntity.ok(service.createUser(user));
     }
 
-    @GetMapping("/users")
-    public List<UserAccountEntity> users() {
-        return service.getAllUsers();
+    @GetMapping("/{id}")
+    public ResponseEntity<UserAccountEntity> getById(
+            @PathVariable Long id) {
+        return ResponseEntity.ok(service.getUserById(id));
     }
 
-    @GetMapping("/users/{id}")
-    public UserAccountEntity user(@PathVariable Long id) {
-        return service.getUser(id);
+    @GetMapping
+    public ResponseEntity<List<UserAccountEntity>> getAll() {
+        return ResponseEntity.ok(service.getAllUsers());
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<UserAccountEntity> updateStatus(
+            @PathVariable Long id,
+            @RequestParam boolean active) {
+        return ResponseEntity.ok(service.updateUserStatus(id, active));
     }
 }

@@ -1,36 +1,46 @@
 package com.example.demo.controller;
 
-import java.util.List;
+import com.example.demo.entity.EventMergeRecordEntity;
+import com.example.demo.service.EventMergeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.Entity.EventMergeRecordEntity;
-import com.example.demo.Service.EventMergeService;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/event-merges")
 public class EventMergeController {
 
-    private final EventMergeService mergeService;
+    private final EventMergeService service;
 
-    public EventMergeController(EventMergeService mergeService) {
-        this.mergeService = mergeService;
+    public EventMergeController(EventMergeService service) {
+        this.service = service;
     }
 
-    // MERGE EVENTS
     @PostMapping
-    public EventMergeRecordEntity mergeEvents(@RequestBody List<Long> eventIds,@RequestParam String reason) {
-        return mergeService.mergeEvents(eventIds, reason);
+    public ResponseEntity<EventMergeRecordEntity> merge(
+            @RequestParam List<Long> eventIds,
+            @RequestParam String reason) {
+        return ResponseEntity.ok(service.mergeEvents(eventIds, reason));
     }
 
-    // GET ALL MERGE RECORDS
     @GetMapping
-    public List<EventMergeRecordEntity> getAllMergeRecords() {
-        return mergeService.getAllMergeRecords();
+    public ResponseEntity<List<EventMergeRecordEntity>> getAll() {
+        return ResponseEntity.ok(service.getAllMergeRecords());
     }
 
-    // GET MERGE RECORD BY ID
     @GetMapping("/{id}")
-    public EventMergeRecordEntity getMergeRecordById(@PathVariable Long id) {
-        return mergeService.getMergeRecordById(id);
+    public ResponseEntity<EventMergeRecordEntity> getById(
+            @PathVariable Long id) {
+        return ResponseEntity.ok(service.getMergeRecordById(id));
+    }
+
+    @GetMapping("/date-range")
+    public ResponseEntity<List<EventMergeRecordEntity>> byDate(
+            @RequestParam LocalDate start,
+            @RequestParam LocalDate end) {
+        return ResponseEntity.ok(
+                service.getMergeRecordsByDate(start, end));
     }
 }

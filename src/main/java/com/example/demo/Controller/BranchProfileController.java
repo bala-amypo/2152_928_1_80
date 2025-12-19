@@ -1,48 +1,44 @@
-package com.example.demo.Controller;
+package com.example.demo.controller;
 
-import java.util.List;
+import com.example.demo.entity.BranchProfileEntity;
+import com.example.demo.service.BranchProfileService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.Entity.BranchProfileEntity;
-import com.example.demo.Service.BranchProfileService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/branches")
 public class BranchProfileController {
 
-    private final BranchProfileService branchService;
+    private final BranchProfileService service;
 
-    public BranchProfileController(BranchProfileService branchService) {
-        this.branchService = branchService;
+    public BranchProfileController(BranchProfileService service) {
+        this.service = service;
     }
 
-    // CREATE BRANCH
     @PostMapping
-    public BranchProfileEntity createBranch(@RequestBody BranchProfileEntity branch) {
-        return branchService.createBranch(branch);
+    public ResponseEntity<BranchProfileEntity> createBranch(
+            @Valid @RequestBody BranchProfileEntity branch) {
+        return ResponseEntity.ok(service.createBranch(branch));
     }
 
-    // UPDATE BRANCH STATUS
-    @PutMapping("/{id}/status")
-    public BranchProfileEntity updateStatus(@PathVariable Long id,@RequestParam boolean active) {
-        return branchService.updateBranchStatus(id, active);
-    }
-
-    // GET ALL BRANCHES
-    @GetMapping
-    public List<BranchProfileEntity> getAllBranches() {
-        return branchService.getAllBranches();
-    }
-
-    // GET BRANCH BY ID
     @GetMapping("/{id}")
-    public BranchProfileEntity getBranchById(@PathVariable Long id) {
-        return branchService.getBranchById(id);
+    public ResponseEntity<BranchProfileEntity> getById(
+            @PathVariable Long id) {
+        return ResponseEntity.ok(service.getBranchById(id));
     }
 
-    // GET BRANCH BY CODE
-    @GetMapping("/code/{branchCode}")
-    public BranchProfileEntity getByBranchCode(@PathVariable String branchCode) {
-        return branchService.findByBranchCode(branchCode);
+    @GetMapping
+    public ResponseEntity<List<BranchProfileEntity>> getAll() {
+        return ResponseEntity.ok(service.getAllBranches());
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<BranchProfileEntity> updateStatus(
+            @PathVariable Long id,
+            @RequestParam boolean active) {
+        return ResponseEntity.ok(service.updateBranchStatus(id, active));
     }
 }

@@ -1,48 +1,73 @@
-package com.example.demo.Controller;
+package com.example.demo.controller;
 
-import java.util.List;
+import com.example.demo.entity.ClashRecordEntity;
+import com.example.demo.service.ClashDetectionService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.Entity.ClashRecordEntity;
-import com.example.demo.Service.ClashDetectionService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/clashes")
 public class ClashRecordController {
 
-    private final ClashDetectionService clashService;
+    private final ClashDetectionService clashDetectionService;
 
-    public ClashRecordController(ClashDetectionService clashService) {
-        this.clashService = clashService;
+    public ClashRecordController(ClashDetectionService clashDetectionService) {
+        this.clashDetectionService = clashDetectionService;
     }
 
-    // LOG CLASH
+    /**
+     * Log a new clash
+     */
     @PostMapping
-    public ClashRecordEntity logClash(@RequestBody ClashRecordEntity clash) {
-        return clashService.logClash(clash);
+    public ResponseEntity<ClashRecordEntity> logClash(
+            @Valid @RequestBody ClashRecordEntity clash) {
+        return ResponseEntity.ok(
+                clashDetectionService.logClash(clash)
+        );
     }
 
-    // RESOLVE CLASH
+    /**
+     * Resolve a clash
+     */
     @PutMapping("/{id}/resolve")
-    public ClashRecordEntity resolveClash(@PathVariable Long id) {
-        return clashService.resolveClash(id);
+    public ResponseEntity<ClashRecordEntity> resolveClash(
+            @PathVariable Long id) {
+        return ResponseEntity.ok(
+                clashDetectionService.resolveClash(id)
+        );
     }
 
-    // GET ALL CLASHES
-    @GetMapping
-    public List<ClashRecordEntity> getAllClashes() {
-        return clashService.getAllClashes();
-    }
-
-    // GET UNRESOLVED CLASHES
-    @GetMapping("/unresolved")
-    public List<ClashRecordEntity> getUnresolvedClashes() {
-        return clashService.getUnresolvedClashes();
-    }
-
-    // GET CLASHES FOR EVENT
+    /**
+     * Get clashes for a specific event
+     */
     @GetMapping("/event/{eventId}")
-    public List<ClashRecordEntity> getClashesForEvent(@PathVariable Long eventId) {
-        return clashService.getClashesForEvent(eventId);
+    public ResponseEntity<List<ClashRecordEntity>> getClashesForEvent(
+            @PathVariable Long eventId) {
+        return ResponseEntity.ok(
+                clashDetectionService.getClashesForEvent(eventId)
+        );
+    }
+
+    /**
+     * Get unresolved clashes
+     */
+    @GetMapping("/unresolved")
+    public ResponseEntity<List<ClashRecordEntity>> getUnresolvedClashes() {
+        return ResponseEntity.ok(
+                clashDetectionService.getUnresolvedClashes()
+        );
+    }
+
+    /**
+     * Get all clashes
+     */
+    @GetMapping
+    public ResponseEntity<List<ClashRecordEntity>> getAllClashes() {
+        return ResponseEntity.ok(
+                clashDetectionService.getAllClashes()
+        );
     }
 }
