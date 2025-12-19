@@ -7,6 +7,8 @@ import com.example.demo.Repository.AcademicEventRepository;
 
 @Service
 public class AcademicEventImpl implements AcademicEventService {
+    @Autowired
+    private AcademicEventRepository academicEventRepository;
 
     private final AcademicEventRepository repo;
 
@@ -36,8 +38,9 @@ public class AcademicEventImpl implements AcademicEventService {
 
     @Override
     public AcademicEventEntity getEventById(Long id) {
-        return AcademicEventRepository.findById(id).orElse(null);
+        return academicEventRepository.findById(id).orElse(null);
     }
+
 
 
     @Override
