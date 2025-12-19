@@ -33,6 +33,14 @@ public class BranchProfileEntity {
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
 
+    public LocalDateTime getLastSyncAt() {
+        return lastSyncAt;
+    }
+
+    public void setLastSyncAt(LocalDateTime lastSyncAt) {
+        this.lastSyncAt = lastSyncAt;
+    }
+
     @PrePersist
     void onCreate() {
         lastSyncAt = LocalDateTime.now();

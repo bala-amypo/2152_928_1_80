@@ -4,7 +4,6 @@ import com.example.demo.entity.UserAccountEntity;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.exception.ValidationException;
 import com.example.demo.repository.UserAccountRepository;
-import com.example.demo.service.UserAccountService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
