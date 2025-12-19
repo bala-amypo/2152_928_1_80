@@ -15,3 +15,4 @@ public interface ClashDetectionService {
 
     List<ClashRecordEntity> getAllClashes();
 }
+

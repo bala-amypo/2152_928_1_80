@@ -34,10 +34,11 @@ public class AcademicEventImpl implements AcademicEventService {
         return repo.save(existing);
     }
 
-    //@Override
-    //public AcademicEventEntity getEventById(Long id) {
-        //return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event not found"));
-    //}
+    @Override
+    public AcademicEventEntity getEventById(Long id) {
+        return academicEventRepository.findById(id).orElse(null);
+    }
+
 
     @Override
     public List<AcademicEventEntity> getAllEvents() {
@@ -48,8 +49,4 @@ public class AcademicEventImpl implements AcademicEventService {
     public List<AcademicEventEntity> getEventsByBranch(Long branchId) {
         return repo.findByBranchId(branchId);
     }
-}
-@Override
-public AcademicEventEntity getEventById(Long id) {
-    return academicEventRepository.findById(id).orElse(null);
 }
