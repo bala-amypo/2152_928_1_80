@@ -35,9 +35,7 @@ public class UserAccountController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<UserAccountEntity> updateStatus(
-            @PathVariable Long id,
-            @RequestParam boolean active) {
+    public ResponseEntity<UserAccountEntity> updateStatus(@PathVariable Long id,@RequestParam boolean active) {
         return ResponseEntity.ok(service.updateUserStatus(id, active));
     }
 }

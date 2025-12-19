@@ -8,4 +8,8 @@ public interface UserAccountService {
     UserAccountEntity getUser(Long id);
     List<UserAccountEntity> getAllUsers();
     UserAccountEntity findByEmail(String email);
+
+    UserAccountEntity createUser(UserAccountEntity user);
+    UserAccountEntity getUserById(Long id);
+    void updateUserStatus(Long id, boolean active);
 }
