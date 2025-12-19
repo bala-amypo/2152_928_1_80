@@ -3,6 +3,9 @@ package com.example.demo.Entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
+private LocalDateTime createdAt;
+
+
 
 @Entity
 public class EventMergeRecordEntity {
@@ -56,4 +59,8 @@ public class EventMergeRecordEntity {
     public void setMergeReason(String mergeReason) { this.mergeReason = mergeReason; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
 }

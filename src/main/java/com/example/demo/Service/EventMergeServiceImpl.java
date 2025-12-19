@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.Entity.EventMergeRecordEntity;
 import com.example.demo.Repository.EventMergeRecordRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EventMergeServiceImpl {
@@ -17,18 +19,6 @@ public class EventMergeServiceImpl {
     public EventMergeServiceImpl(EventMergeRecordRepository repo) {
         this.repo = repo;
     }
-    import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-
-
-    
-
-
-
-   
-
-
     @Override
     public EventMergeRecordEntity mergeEvents(List<Long> eventIds, String reason) {
         EventMergeRecordEntity record = new EventMergeService();
