@@ -21,9 +21,10 @@ public class ClashDetectionServiceImpl implements ClashDetectionService {
     }
 
     @Override
-    public void resolveClash(Long id) {
-        // TODO: add logic later
-    }
+public ClashRecordEntity resolveClash(Long id) {
+    return new ClashRecordEntity(); // placeholder
+}
+
 
 
     @Override
@@ -40,4 +41,8 @@ public class ClashDetectionServiceImpl implements ClashDetectionService {
     public List<ClashRecordEntity> getAllClashes() {
         return repo.findAll();
     }
+}
+@Override
+public ClashRecordEntity resolveClash(Long id) {
+    return new ClashRecordEntity(); // placeholder
 }
