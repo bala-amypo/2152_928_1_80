@@ -33,11 +33,11 @@ public class BranchProfileServiceImpl implements BranchProfileService {
 
     @Override
     public BranchProfileEntity getBranchById(Long id) {
-        return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Branch not found"));
+        return repo.findById(id);
     }
 
     @Override
     public BranchProfileEntity findByBranchCode(String branchCode) {
-        //return repo.findByBranchCode(branchCode).orElseThrow(() -> new ResourceNotFoundException("Branch code not found"));
+        return repo.findByBranchCode(branchCode);
     }
 }

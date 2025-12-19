@@ -14,7 +14,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccountServiceImpl(UserAccountRepository repo) {
         this.repo = repo;
     }
-    UserAccountEntity user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    UserAccountEntity user = userRepository.findById(id);
 
 
     @Override
