@@ -18,9 +18,9 @@ public class BranchProfileEntity {
     private LocalDateTime lastSyncAt;
 
     @PrePersist
-    public void onCreate() {
+    void onCreate() {
         lastSyncAt = LocalDateTime.now();
     }
 
-    // getters and setters
+    // getters & setters
 }

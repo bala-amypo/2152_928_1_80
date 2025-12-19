@@ -22,9 +22,9 @@ public class AcademicEventEntity {
     private LocalDateTime submittedAt;
 
     @PrePersist
-    public void validate() {
+    void validate() {
         if (startDate.isAfter(endDate)) {
-            throw new ValidationException("Start date must be before or equal to end date");
+            throw new ValidationException("Start date cannot be after end date");
         }
         submittedAt = LocalDateTime.now();
     }

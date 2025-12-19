@@ -19,7 +19,7 @@ public class UserAccountEntity {
     private LocalDateTime createdAt;
 
     @PrePersist
-    public void onCreate() {
+    void onCreate() {
         createdAt = LocalDateTime.now();
     }
 }
