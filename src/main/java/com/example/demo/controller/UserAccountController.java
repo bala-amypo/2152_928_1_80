@@ -24,8 +24,7 @@ public class UserAccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserAccountEntity> getById(
-            @PathVariable Long id) {
+    public ResponseEntity<UserAccountEntity> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getUserById(id));
     }
 
@@ -34,8 +33,10 @@ public class UserAccountController {
         return ResponseEntity.ok(service.getAllUsers());
     }
 
+    // Fixed updateStatus method
     @PutMapping("/{id}/status")
-    public ResponseEntity<UserAccountEntity> updateStatus(@PathVariable Long id,@RequestParam boolean active) {
-        return ResponseEntity.ok(service.updateUserStatus(id, active));
+    public ResponseEntity<Void> updateStatus(@PathVariable Long id, @RequestParam boolean active) {
+        service.updateUserStatus(id, active); // call void method
+        return ResponseEntity.ok().build();   // return 200 OK without body
     }
 }
