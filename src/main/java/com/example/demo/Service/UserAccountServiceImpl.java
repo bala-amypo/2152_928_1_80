@@ -16,7 +16,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         this.repository = repository;
     }
 
-    @Override
     public UserAccountEntity register(UserAccountEntity user) {
         if (repository.existsByEmail(user.getEmail())) {
             throw new ValidationException("Email already exists");
@@ -24,19 +23,15 @@ public class UserAccountServiceImpl implements UserAccountService {
         return repository.save(user);
     }
 
-    @Override
     public UserAccountEntity getUser(Long id) {
         return repository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
-    @Override
     public List<UserAccountEntity> getAllUsers() {
         return repository.findAll();
     }
 
-    @Override
     public UserAccountEntity findByEmail(String email) {
         UserAccountEntity user = repository.findByEmail(email);
         if (user == null) {

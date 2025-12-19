@@ -1,43 +1,56 @@
-package com.example.demo.Service;
+package com.example.demo.serviceimpl;
+
+import com.example.demo.entity.BranchProfileEntity;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.exception.ValidationException;
+import com.example.demo.repository.BranchProfileRepository;
+import com.example.demo.service.BranchProfileService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import org.springframework.stereotype.Service;
-import com.example.demo.Entity.BranchProfileEntity;
-import com.example.demo.Repository.BranchProfileRepository;
 
 @Service
 public class BranchProfileServiceImpl implements BranchProfileService {
 
-    private final BranchProfileRepository repo;
+    private final BranchProfileRepository repository;
 
-    public BranchProfileServiceImpl(BranchProfileRepository repo) {
-        this.repo = repo;
+    public BranchProfileServiceImpl(BranchProfileRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public BranchProfileEntity createBranch(BranchProfileEntity branch) {
-        return repo.save(branch);
+        if (repository.findByBranchCode(branch.getBranchCode()) != null) {
+            throw new ValidationException("Branch code already exists");
+        }
+        return repository.save(branch);
     }
 
     @Override
     public BranchProfileEntity updateBranchStatus(Long id, boolean active) {
         BranchProfileEntity branch = getBranchById(id);
         branch.setActive(active);
-        return repo.save(branch);
+        return repository.save(branch);
     }
 
     @Override
     public List<BranchProfileEntity> getAllBranches() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     @Override
     public BranchProfileEntity getBranchById(Long id) {
-        return repo.findById(id);
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Branch not found"));
     }
 
     @Override
     public BranchProfileEntity findByBranchCode(String branchCode) {
-        return repo.findByBranchCode(branchCode);
+        BranchProfileEntity branch = repository.findByBranchCode(branchCode);
+        if (branch == null) {
+            throw new ResourceNotFoundException("Branch not found");
+        }
+        return branch;
     }
 }

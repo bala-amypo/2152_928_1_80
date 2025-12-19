@@ -1,7 +1,7 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
+import com.example.demo.entity.BranchProfileEntity;
 import java.util.List;
-import com.example.demo.Entity.BranchProfileEntity;
 
 public interface BranchProfileService {
 

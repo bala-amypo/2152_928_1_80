@@ -1,8 +1,8 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
+import com.example.demo.entity.HarmonizedCalendarEntity;
 import java.time.LocalDate;
 import java.util.List;
-import com.example.demo.Entity.HarmonizedCalendarEntity;
 
 public interface HarmonizedCalendarService {
 
@@ -12,5 +12,6 @@ public interface HarmonizedCalendarService {
 
     List<HarmonizedCalendarEntity> getAllCalendars();
 
-    List<HarmonizedCalendarEntity> getCalendarsWithinRange(LocalDate start, LocalDate end);
+    List<HarmonizedCalendarEntity> getCalendarsWithinRange(
+            LocalDate start, LocalDate end);
 }
