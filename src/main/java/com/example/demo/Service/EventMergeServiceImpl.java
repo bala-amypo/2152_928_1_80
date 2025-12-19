@@ -15,6 +15,8 @@ public class EventMergeServiceImpl implements EventMergeService {
     public EventMergeServiceImpl(EventMergeRecordRepository repo) {
         this.repo = repo;
     }
+   
+
 
     @Override
     public EventMergeRecordEntity mergeEvents(List<Long> eventIds, String reason) {

@@ -49,6 +49,10 @@ public class HarmonizedCalendarEntity {
     public void setGeneratedBy(String generatedBy) { this.generatedBy = generatedBy; }
 
     public LocalDateTime getGeneratedAt() { return generatedAt; }
+    private LocalDateTime generatedAt;
+    public void setGeneratedAt(LocalDateTime generatedAt) {
+        this.generatedAt = generatedAt;
+    }
 
     public LocalDate getEffectiveFrom() { return effectiveFrom; }
     public void setEffectiveFrom(LocalDate effectiveFrom) { this.effectiveFrom = effectiveFrom; }
@@ -59,3 +63,4 @@ public class HarmonizedCalendarEntity {
     public String getEventsJson() { return eventsJson; }
     public void setEventsJson(String eventsJson) { this.eventsJson = eventsJson; }
 }
+
