@@ -13,6 +13,7 @@ public class AcademicEventEntity {
     private LocalDate endDate;
     private String location;
     private String description;
+    private LocalDateTime submittedAt;
 
     // Getters and setters
     public String getTitle() { return title; }
@@ -27,6 +28,8 @@ public class AcademicEventEntity {
     public void setLocation(String location) { this.location = location; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+    public LocalDateTime getSubmittedAt() { return submittedAt; }
+    public void setSubmittedAt(LocalDateTime submittedAt) { this.submittedAt = submittedAt; }
 
 
 
