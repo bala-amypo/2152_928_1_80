@@ -11,31 +11,6 @@ public class BranchProfileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String branchCode;
-    private String branchName;
-    private String contactEmail;
-    private Boolean active = true;
-    private LocalDateTime lastSyncAt;
-
-    @PrePersist
-    void onCreate() {
-        lastSyncAt = LocalDateTime.now();
-    }
-
-    // getters & setters
-}
-package com.example.demo.entity;
-
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "branch_profiles")
-public class BranchProfileEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(nullable = false, unique = true)
     private String branchCode;
 
@@ -57,4 +32,11 @@ public class BranchProfileEntity {
 
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
+
+    @PrePersist
+    void onCreate() {
+        lastSyncAt = LocalDateTime.now();
+    }
+
+    
 }
