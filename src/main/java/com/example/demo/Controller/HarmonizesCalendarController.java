@@ -3,16 +3,16 @@ package com.example.demo.Controller;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.Entity.HarmonizedCalendarEntity;
-import com.example.demo.Service.HarmonizedCalendarService;
+import com.example.demo.Entity.HarmonizesCalendarEntity;
+import com.example.demo.Service.HarmonizesCalendarService;
 
 @RestController
 @RequestMapping("/api/harmonized-calendars")
-public class HarmonizedCalendarController {
+public class HarmonizesCalendarController {
 
-    private final HarmonizedCalendarService calendarService;
+    private final HarmonizesCalendarService calendarService;
 
-    public HarmonizedCalendarController(HarmonizedCalendarService calendarService) {
+    public HarmonizedCalendarController(HarmonizesCalendarService calendarService) {
         this.calendarService = calendarService;
     }
 
