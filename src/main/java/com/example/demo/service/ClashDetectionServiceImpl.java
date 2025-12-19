@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.Repository.ClashRecordRepository;
 import com.example.demo.entity.ClashRecordEntity;
-import com.example.demo.repository.ClashRecordRepository;
+import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -15,8 +17,8 @@ public class ClashDetectionServiceImpl implements ClashDetectionService {
     }
 
     @Override
-    public void logClash(ClashRecordEntity clash) {
-        repository.save(clash);
+    public ClashRecordEntity logClash(ClashRecordEntity clash) {
+        return repository.save(clash);
     }
 
     @Override
@@ -25,16 +27,16 @@ public class ClashDetectionServiceImpl implements ClashDetectionService {
     }
 
     @Override
-    public void resolveClash(Long clashId) {
-        ClashRecordEntity clash = repository.findById(clashId)
-            .orElseThrow(() -> new RuntimeException("Clash not found"));
-        clash.setResolved(true);
-        repository.save(clash);
+    public List<ClashRecordEntity> getUnresolvedClashes() {
+        return repository.findByResolved(false);
     }
 
     @Override
-    public List<ClashRecordEntity> getUnresolvedClashes() {
-        return repository.findByResolvedFalse();
+    public void resolveClash(Long clashId) {
+        ClashRecordEntity clash = repository.findById(clashId)
+                .orElseThrow(() -> new ResourceNotFoundException("Clash not found with id " + clashId));
+        clash.setResolved(true);
+        repository.save(clash);
     }
 
     @Override
