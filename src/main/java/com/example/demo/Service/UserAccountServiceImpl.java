@@ -14,6 +14,8 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccountServiceImpl(UserAccountRepository repo) {
         this.repo = repo;
     }
+    UserAccountEntity user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+
 
     @Override
     public UserAccountEntity register(UserAccountEntity user) {
@@ -36,3 +38,4 @@ public class UserAccountServiceImpl implements UserAccountService {
         return repo.findByEmail(email);
     }
 }
+
