@@ -49,7 +49,7 @@ public class HarmonizedCalendarEntity {
     public void setGeneratedBy(String generatedBy) { this.generatedBy = generatedBy; }
 
     public LocalDateTime getGeneratedAt() { return generatedAt; }
-    private LocalDateTime generatedAt;
+    
     public void setGeneratedAt(LocalDateTime generatedAt) {
         this.generatedAt = generatedAt;
     }
