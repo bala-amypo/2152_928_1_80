@@ -17,6 +17,16 @@ public class UserAccountEntity {
     private String role;
     private String department;
     private LocalDateTime createdAt;
+    private boolean active;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
     @PrePersist
     void onCreate() {
