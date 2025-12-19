@@ -17,10 +17,10 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
     @Override
     public void updateUserStatus(Long id, boolean active) {
-    UserAccountEntity user = repo.findById(id).orElseThrow();
-    user.setActive(active);
-    repo.save(user);
-}
+        UserAccountEntity user = repo.findById(id).orElseThrow();
+        user.setActive(active);
+        repo.save(user);
+    }
 
     public UserAccountEntity register(UserAccountEntity user) {
         if (repository.existsByEmail(user.getEmail())) {
