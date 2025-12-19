@@ -36,7 +36,7 @@ public class AcademicEventImpl implements AcademicEventService {
 
     @Override
     public AcademicEventEntity getEventById(Long id) {
-        return academicEventRepository.findById(id).orElse(null);
+        return AcademicEventRepository.findById(id).orElse(null);
     }
 
 
