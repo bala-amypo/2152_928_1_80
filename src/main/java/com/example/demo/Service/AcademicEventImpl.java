@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.Entity.AcademicEventEntity;
 import com.example.demo.Repository.AcademicEventRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class AcademicEventImpl implements AcademicEventService {

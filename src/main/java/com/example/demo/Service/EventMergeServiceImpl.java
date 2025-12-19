@@ -8,13 +8,24 @@ import com.example.demo.Entity.EventMergeRecordEntity;
 import com.example.demo.Repository.EventMergeRecordRepository;
 
 @Service
-public class EventMergeServiceImpl implements EventMergeService {
+public class EventMergeServiceImpl {
+    @Autowired
+    private EventMergeService eventMergeService;
 
     private final EventMergeRecordRepository repo;
 
     public EventMergeServiceImpl(EventMergeRecordRepository repo) {
         this.repo = repo;
     }
+    import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+
+    
+
+
+
    
 
 
