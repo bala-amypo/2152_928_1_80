@@ -34,7 +34,7 @@ public class AcademicEventImpl implements AcademicEventService {
         return repo.save(existing);
     }
 
-    @Override
+    //@Override
     //public AcademicEventEntity getEventById(Long id) {
         //return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event not found"));
     //}
