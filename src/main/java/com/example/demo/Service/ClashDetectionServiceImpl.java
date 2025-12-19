@@ -21,12 +21,11 @@ public class ClashDetectionServiceImpl implements ClashDetectionService {
     }
 
     @Override
-    public ClashRecordEntity resolveClash(Long id) {
-        ClashRecordEntity clash = repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Clash not found"));
-        clash.setResolved(true);
-        return repo.save(clash);
-    }
+    //public ClashRecordEntity resolveClash(Long id) {
+        //ClashRecordEntity clash = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Clash not found"));
+        //clash.setResolved(true);
+        //return repo.save(clash);
+    //}
 
     @Override
     public List<ClashRecordEntity> getClashesForEvent(Long eventId) {
