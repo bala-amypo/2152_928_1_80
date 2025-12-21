@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class AcademicEventEntity {
+    @Id
     private String title;
     private String eventType;
     private LocalDate startDate;
