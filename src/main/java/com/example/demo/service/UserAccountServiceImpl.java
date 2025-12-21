@@ -19,10 +19,11 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccountEntity createUser(UserAccountEntity user) {
-        // Check for duplicate email
+        // unique email check
         if (repository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
+
         return repository.save(user);
     }
 

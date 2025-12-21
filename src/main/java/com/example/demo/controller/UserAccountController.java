@@ -19,14 +19,7 @@ public class UserAccountController {
 
     @PostMapping
     public ResponseEntity<UserAccountEntity> create(@Valid @RequestBody UserAccountEntity user) {
-        UserAccountEntity newUser = new UserAccountEntity(
-                user.getFullName(),
-                user.getEmail(),
-                user.getPassword()
-        );
-        newUser.setRole(user.getRole());
-        newUser.setDepartment(user.getDepartment());
-        return ResponseEntity.ok(service.createUser(newUser));
+        return ResponseEntity.ok(service.createUser(user));
     }
 
     @GetMapping("/{id}")
