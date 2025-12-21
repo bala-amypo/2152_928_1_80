@@ -22,7 +22,6 @@ public class UserAccountEntity {
     @Email(message = "Invalid email")
     private String email;
 
-    // password optional now
     @JsonIgnore
     private String password;
 
@@ -44,7 +43,7 @@ public class UserAccountEntity {
         }
     }
 
-    // Getters & Setters
+    // getters/setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
