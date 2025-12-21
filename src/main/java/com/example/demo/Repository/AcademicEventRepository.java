@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AcademicEventRepository
-        extends JpaRepository<AcademicEventEntity, Long> {
+        extends JpaRepository<AcademicEventEntity, String> {
 
     List<AcademicEventEntity> findByBranchId(Long branchId);
 }
