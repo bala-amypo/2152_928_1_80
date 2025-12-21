@@ -23,7 +23,6 @@ public class HarmonizedCalendarController {
         this.service = service;
     }
     
-    @RestController
     @PostMapping("/calendar")
     public ResponseEntity<String> generate(
             @RequestParam String startDate,
