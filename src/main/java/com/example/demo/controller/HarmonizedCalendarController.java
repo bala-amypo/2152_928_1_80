@@ -29,14 +29,6 @@ public class HarmonizedCalendarController {
         return ResponseEntity.ok(calendar);
     }
 
-    @PostMapping
-    public ResponseEntity<HarmonizedCalendarEntity> generate(
-            @RequestParam String title,
-            @RequestParam String generatedBy) {
-        return ResponseEntity.ok(
-                service.generateHarmonizedCalendar(title, generatedBy));
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<HarmonizedCalendarEntity> getById(
             @PathVariable Long id) {
