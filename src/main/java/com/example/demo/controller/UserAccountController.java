@@ -19,14 +19,13 @@ public class UserAccountController {
 
     @PostMapping
     public ResponseEntity<UserAccountEntity> create(@Valid @RequestBody UserAccountEntity user) {
-        // Only use allowed fields to avoid 400 errors
         UserAccountEntity newUser = new UserAccountEntity(
                 user.getFullName(),
                 user.getEmail(),
                 user.getPassword()
         );
-        newUser.setRole(user.getRole());         // optional
-        newUser.setDepartment(user.getDepartment()); // optional
+        newUser.setRole(user.getRole());
+        newUser.setDepartment(user.getDepartment());
         return ResponseEntity.ok(service.createUser(newUser));
     }
 
