@@ -6,18 +6,6 @@ import com.example.demo.repository.HarmonizedCalendarRepository;
 import com.example.demo.service.HarmonizedCalendarService;
 import org.springframework.stereotype.Service;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-
-
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,19 +18,16 @@ public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService 
     public HarmonizedCalendarServiceImpl(HarmonizedCalendarRepository repository) {
         this.repository = repository;
     }
-    @RestController     
-    @RequestMapping("/api/calendars")
-    public class HarmonizedCalendarController {
 
-    @PostMapping("/generate")
-    public HarmonizedCalenderEntity<HarmonizedCalendarEntity> generateCalendar(
-            @RequestBody GenerateCalendarRequest request) {
+    @Override
+    public HarmonizedCalendarEntity generateHarmonizedCalendar(String title, String generatedBy) {
 
-            HarmonizedCalendarEntity calendar = service.generate(request);
-            return ResponseEntity.ok(calendar);
+        HarmonizedCalendarEntity calendar = new HarmonizedCalendarEntity();
+        calendar.setTitle(title);
+        calendar.setGeneratedBy(generatedBy);
+
+        return repository.save(calendar);
     }
-}
-
 
     @Override
     public HarmonizedCalendarEntity getCalendarById(Long id) {

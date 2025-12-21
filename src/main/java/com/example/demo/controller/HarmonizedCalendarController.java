@@ -20,6 +20,7 @@ public class HarmonizedCalendarController {
     }
 
     @PostMapping
+    @RequestMapping("/generate")
     public ResponseEntity<HarmonizedCalendarEntity> generate(
             @RequestParam String title,
             @RequestParam String generatedBy) {
