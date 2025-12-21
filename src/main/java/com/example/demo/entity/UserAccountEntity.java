@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,33 +14,56 @@ public class UserAccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Full name required")
+    @NotBlank(message="Name required")
     private String fullName;
 
-    @NotBlank(message = "Email required")
-    @Email(message = "Invalid email")
+    @NotBlank
+    @Email
     private String email;
 
     @NotBlank
-    @Size(min = 6, message = "Password must be 6+ characters")
     private String password;
 
-    @NotBlank
     private String role;
-
     private String department;
-
     private LocalDateTime createdAt;
 
     private boolean active;
 
     @OneToMany(mappedBy = "generatedByUser")
-    private List<HarmonizedCalendarEntity> generatedCalendars;
+    private List<HarmonizedCalendarEntity> calendars;
 
     @PrePersist
-    void onCreate() {
+    void created() {
         createdAt = LocalDateTime.now();
     }
 
-    // getters and setters
+    // getters + setters
+    
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getFullName(){ return fullName;}
+    public void setFullName(String fullName){ this.fullName=fullName;}
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPassword(){ return password; }
+    public void setPassword(String password){ this.password = password;}
+
+    public boolean isActive(){ return active; }
+    public void setActive(boolean active){ this.active = active; }
+
+    public String getRole(){ return role;}
+    public void setRole(String role){ this.role = role;}
+
+    public String getDepartment(){ return department;}
+    public void setDepartment(String department){ this.department=department;}
+
+    public LocalDateTime getCreatedAt(){ return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt){ this.createdAt = createdAt;}
+
+    public List<HarmonizedCalendarEntity> getCalendars() { return calendars; }
+    public void setCalendars(List<HarmonizedCalendarEntity> calendars) { this.calendars = calendars; }
 }
