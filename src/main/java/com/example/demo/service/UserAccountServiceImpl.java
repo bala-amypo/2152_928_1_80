@@ -1,14 +1,14 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.UserAccountEntity;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ValidationException;
 import com.example.demo.repository.UserAccountRepository;
+import com.example.demo.service.UserAccountService;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository repository;
@@ -19,8 +19,9 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccountEntity createUser(UserAccountEntity user) {
+        // Check for duplicate email
         if (repository.existsByEmail(user.getEmail())) {
-            throw new ValidationException("Email already exists");
+            throw new RuntimeException("Email already exists");
         }
         return repository.save(user);
     }
@@ -28,7 +29,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public UserAccountEntity getUserById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @Override
@@ -38,18 +39,8 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public void updateUserStatus(Long id, boolean active) {
-        UserAccountEntity user = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        UserAccountEntity user = getUserById(id);
         user.setActive(active);
         repository.save(user);
-    }
-
-    @Override
-    public UserAccountEntity findByEmail(String email) {
-        UserAccountEntity user = repository.findByEmail(email);
-        if (user == null) {
-            throw new ResourceNotFoundException("User not found");
-        }
-        return user;
     }
 }

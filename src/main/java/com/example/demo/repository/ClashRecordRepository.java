@@ -1,12 +1,12 @@
-package com.example.demo.Repository;
+package com.example.demo.repository;
 
 import com.example.demo.entity.ClashRecordEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.repository;
 
 import java.util.List;
 
-@Repository
+@repository
 public interface ClashRecordRepository extends JpaRepository<ClashRecordEntity, Long> {
 
     List<ClashRecordEntity> findByResolved(Boolean resolved);
