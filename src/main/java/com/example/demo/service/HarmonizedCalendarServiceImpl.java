@@ -18,16 +18,19 @@ public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService 
     public HarmonizedCalendarServiceImpl(HarmonizedCalendarRepository repository) {
         this.repository = repository;
     }
+    @RestController     
+    @RequestMapping("/api/calendars")
+    public class HarmonizedCalendarController {
 
-    @Override
-    public HarmonizedCalendarEntity generateHarmonizedCalendar(String title, String generatedBy) {
+    @PostMapping("/generate")
+    public ResponseEntity<HarmonizedCalendarEntity> generateCalendar(
+            @RequestBody GenerateCalendarRequest request) {
 
-        HarmonizedCalendarEntity calendar = new HarmonizedCalendarEntity();
-        calendar.setTitle(title);
-        calendar.setGeneratedBy(generatedBy);
-
-        return repository.save(calendar);
+            HarmonizedCalendarEntity calendar = service.generate(request);
+            return ResponseEntity.ok(calendar);
+        }
     }
+
 
     @Override
     public HarmonizedCalendarEntity getCalendarById(Long id) {
