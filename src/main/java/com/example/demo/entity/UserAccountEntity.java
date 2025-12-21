@@ -1,7 +1,9 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -11,25 +13,33 @@ public class UserAccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Full name required")
     private String fullName;
+
+    @NotBlank(message = "Email required")
+    @Email(message = "Invalid email")
     private String email;
+
+    @NotBlank
+    @Size(min = 6, message = "Password must be 6+ characters")
     private String password;
+
+    @NotBlank
     private String role;
+
     private String department;
+
     private LocalDateTime createdAt;
+
     private boolean active;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    @OneToMany(mappedBy = "generatedByUser")
+    private List<HarmonizedCalendarEntity> generatedCalendars;
 
     @PrePersist
     void onCreate() {
         createdAt = LocalDateTime.now();
     }
+
+    // getters and setters
 }

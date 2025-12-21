@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import com.example.demo.exception.ValidationException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ public class AcademicEventEntity {
     @NotBlank(message = "Title required")
     private String title;
 
-    @NotNull(message = "Branch required")
+    @NotNull
     @Column(nullable = false)
     private Long branchId;
 
@@ -22,20 +23,11 @@ public class AcademicEventEntity {
     @JoinColumn(name = "branchId", insertable = false, updatable = false)
     private BranchProfileEntity branch;
 
-    @NotBlank(message = "Event type required")
     private String eventType;
-
-    @NotNull(message = "Start date required")
     private LocalDate startDate;
-
-    @NotNull(message = "End date required")
     private LocalDate endDate;
-
     private String location;
-
-    @Size(max = 500)
     private String description;
-
     private LocalDateTime submittedAt;
 
     @PrePersist
@@ -46,5 +38,33 @@ public class AcademicEventEntity {
         submittedAt = LocalDateTime.now();
     }
 
-    // getters and setters
+
+    // ---------- getters + setters ---------------
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    public Long getBranchId() { return branchId; }
+    public void setBranchId(Long branchId) { this.branchId = branchId; }
+
+    public BranchProfileEntity getBranch() { return branch; }
+    public void setBranch(BranchProfileEntity branch) { this.branch = branch; }
+
+    public String getEventType() { return eventType; }
+    public void setEventType(String eventType) { this.eventType = eventType; }
+
+    public LocalDate getStartDate() { return startDate; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+
+    public LocalDate getEndDate() { return endDate; }
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public LocalDateTime getSubmittedAt() { return submittedAt; }
+    public void setSubmittedAt(LocalDateTime submittedAt) { this.submittedAt = submittedAt; }
 }

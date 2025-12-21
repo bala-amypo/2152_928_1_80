@@ -6,37 +6,48 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(
-        name = "branch_profiles",
-        uniqueConstraints = @UniqueConstraint(columnNames = "branchCode")
-)
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "branchCode"))
 public class BranchProfileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Branch code required")
-    @Column(nullable = false, unique = true)
+    @NotBlank
     private String branchCode;
 
-    @NotBlank(message = "Branch name required")
-    @Column(nullable = false)
+    @NotBlank
     private String branchName;
 
-    @Column(nullable = false)
     private boolean active = true;
 
     private LocalDateTime lastSyncAt;
 
-    // One branch has many events
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
     private List<AcademicEventEntity> events;
 
     @PrePersist
-    void onCreate() {
+    public void onCreate() {
         lastSyncAt = LocalDateTime.now();
     }
 
-    // getters and setters
+    // --- getters + setters ---
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getBranchCode() { return branchCode; }
+    public void setBranchCode(String branchCode) { this.branchCode = branchCode; }
+
+    public String getBranchName() { return branchName; }
+    public void setBranchName(String branchName) { this.branchName = branchName; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
+
+    public LocalDateTime getLastSyncAt() { return lastSyncAt; }
+    public void setLastSyncAt(LocalDateTime lastSyncAt) { this.lastSyncAt = lastSyncAt; }
+
+    public List<AcademicEventEntity> getEvents() { return events; }
+    public void setEvents(List<AcademicEventEntity> events) { this.events = events; }
 }
