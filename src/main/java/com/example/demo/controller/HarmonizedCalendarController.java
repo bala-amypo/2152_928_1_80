@@ -4,9 +4,9 @@ import com.example.demo.entity.HarmonizedCalendarEntity;
 import com.example.demo.service.HarmonizedCalendarService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.example.demo.dto.GenerateCalendarRequest;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 import java.time.LocalDate;
@@ -22,15 +22,17 @@ public class HarmonizedCalendarController {
             HarmonizedCalendarService service) {
         this.service = service;
     }
-    @PostMapping
-    public ResponseEntity<HarmonizedCalendarEntity> createCalendar(
-            @RequestBody GenerateCalendarRequest request) {
+    
+    @RestController
+    @PostMapping("/calendar")
+    public ResponseEntity<String> generate(
+            @RequestParam String startDate,
+            @RequestParam String endDate) {
 
-        HarmonizedCalendarEntity calendar =
-                service.generateHarmonizedCalendar(request.title(), request.generatedBy());
-
-        return ResponseEntity.ok(calendar);
+        // Your logic here
+        return ResponseEntity.ok("Calendar generated from " + startDate + " to " + endDate);
     }
+}
 
     @GetMapping("/{id}")
     public ResponseEntity<HarmonizedCalendarEntity> getById(
