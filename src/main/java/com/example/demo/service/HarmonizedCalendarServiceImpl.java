@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.demo.dto.GenerateCalendarRequest;
+import com.example.demo.entity.HarmonizedCalendarEntity;
+
 
 import java.time.LocalDate;
 import java.util.List;
