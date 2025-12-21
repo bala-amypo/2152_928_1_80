@@ -10,34 +10,29 @@ import java.util.List;
 @RequestMapping("/api/clashes")
 public class ClashRecordController {
 
-    private final ClashDetectionService service;
+    private final ClashDetectionService clashDetectionService;
 
-    public ClashRecordController(ClashDetectionService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public ClashRecordEntity logClash(@RequestBody ClashRecordEntity clash) {
-        return service.logClash(clash);
-    }
-
-    @GetMapping("/event/{eventId}")
-    public List<ClashRecordEntity> getClashesForEvent(@PathVariable Long eventId) {
-        return service.getClashesForEvent(eventId);
-    }
-
-    @GetMapping("/unresolved")
-    public List<ClashRecordEntity> getUnresolvedClashes() {
-        return service.getUnresolvedClashes();
-    }
-
-    @PutMapping("/{id}/resolve")
-    public void resolveClash(@PathVariable Long id) {
-        service.resolveClash(id);
+    public ClashRecordController(ClashDetectionService clashDetectionService) {
+        this.clashDetectionService = clashDetectionService;
     }
 
     @GetMapping
-    public List<ClashRecordEntity> getAllClashes() {
-        return service.getAllClashes();
+    public List<ClashRecordEntity> getAll() {
+        return clashDetectionService.getAllClashRecords();
+    }
+
+    @GetMapping("/{id}")
+    public ClashRecordEntity getById(@PathVariable Long id) {
+        return clashDetectionService.getClashRecordById(id);
+    }
+
+    @GetMapping("/resolved")
+    public List<ClashRecordEntity> getResolved(@RequestParam Boolean resolved) {
+        return clashDetectionService.getByResolved(resolved);
+    }
+
+    @PostMapping
+    public ClashRecordEntity create(@RequestBody ClashRecordEntity record) {
+        return clashDetectionService.saveClashRecord(record);
     }
 }
