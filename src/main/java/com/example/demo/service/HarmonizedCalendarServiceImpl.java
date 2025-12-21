@@ -28,8 +28,8 @@ public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService 
 
             HarmonizedCalendarEntity calendar = service.generate(request);
             return ResponseEntity.ok(calendar);
-        }
     }
+}
 
 
     @Override
