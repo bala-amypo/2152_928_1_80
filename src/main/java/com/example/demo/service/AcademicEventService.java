@@ -9,9 +9,9 @@ public interface AcademicEventService {
 
     List<AcademicEventEntity> getEventsByBranch(Long branchId);
 
-    AcademicEventEntity updateEvent(Long id, AcademicEventEntity event);
+    AcademicEventEntity updateEvent(String title, AcademicEventEntity event);
 
-    AcademicEventEntity getEventById(Long id);
+    AcademicEventEntity getEventById(String title);
 
     List<AcademicEventEntity> getAllEvents();
 }

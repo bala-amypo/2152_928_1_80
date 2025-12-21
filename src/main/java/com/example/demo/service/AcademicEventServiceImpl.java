@@ -28,10 +28,9 @@ public class AcademicEventServiceImpl implements AcademicEventService {
     }
 
     @Override
-    public AcademicEventEntity updateEvent(Long id, AcademicEventEntity event) {
-        AcademicEventEntity existing = getEventById(id);
+    public AcademicEventEntity updateEvent(String title, AcademicEventEntity event) {
+        AcademicEventEntity existing = getEventById(title);
 
-        existing.setTitle(event.getTitle());
         existing.setEventType(event.getEventType());
         existing.setStartDate(event.getStartDate());
         existing.setEndDate(event.getEndDate());
@@ -42,8 +41,8 @@ public class AcademicEventServiceImpl implements AcademicEventService {
     }
 
     @Override
-    public AcademicEventEntity getEventById(Long id) {
-        return repository.findById(id)
+    public AcademicEventEntity getEventById(String title) {
+        return repository.findById(title)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Event not found"));
     }
@@ -53,5 +52,3 @@ public class AcademicEventServiceImpl implements AcademicEventService {
         return repository.findAll();
     }
 }
-
-
