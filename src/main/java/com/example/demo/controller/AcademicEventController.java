@@ -2,8 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.AcademicEventEntity;
 import com.example.demo.service.AcademicEventService;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,33 +16,37 @@ public class AcademicEventController {
         this.service = service;
     }
 
+    // CREATE
     @PostMapping
-    public ResponseEntity<AcademicEventEntity> create(
-            @Valid @RequestBody AcademicEventEntity event) {
-        return ResponseEntity.ok(service.createEvent(event));
+    public AcademicEventEntity createEvent(@RequestBody AcademicEventEntity event) {
+        return service.createEvent(event);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AcademicEventEntity> getById(
-            @PathVariable Long id) {
-        return ResponseEntity.ok(service.getEventById(id));
+    // GET BY TITLE (ID)
+    @GetMapping("/{title}")
+    public AcademicEventEntity getEventById(@PathVariable String title) {
+        return service.getEventById(title);
     }
 
+    // UPDATE
+    @PutMapping("/{title}")
+    public AcademicEventEntity updateEvent(
+            @PathVariable String title,
+            @RequestBody AcademicEventEntity event) {
+        return service.updateEvent(title, event);
+    }
+
+    // GET ALL
     @GetMapping
-    public ResponseEntity<List<AcademicEventEntity>> getAll() {
-        return ResponseEntity.ok(service.getAllEvents());
+    public List<AcademicEventEntity> getAllEvents() {
+        return service.getAllEvents();
     }
 
+    // GET BY BRANCH
     @GetMapping("/branch/{branchId}")
-    public ResponseEntity<List<AcademicEventEntity>> byBranch(
-            @PathVariable Long branchId) {
-        return ResponseEntity.ok(service.getEventsByBranch(branchId));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<AcademicEventEntity> update(
-            @PathVariable Long id,
-            @Valid @RequestBody AcademicEventEntity event) {
-        return ResponseEntity.ok(service.updateEvent(id, event));
+    public List<AcademicEventEntity> getEventsByBranch(@PathVariable Long branchId) {
+        return service.getEventsByBranch(branchId);
     }
 }
+
+    
