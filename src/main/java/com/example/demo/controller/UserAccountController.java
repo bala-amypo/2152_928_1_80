@@ -19,7 +19,15 @@ public class UserAccountController {
 
     @PostMapping
     public ResponseEntity<UserAccountEntity> create(@Valid @RequestBody UserAccountEntity user) {
-        return ResponseEntity.ok(service.createUser(user));
+        // Only use allowed fields to avoid 400 errors
+        UserAccountEntity newUser = new UserAccountEntity(
+                user.getFullName(),
+                user.getEmail(),
+                user.getPassword()
+        );
+        newUser.setRole(user.getRole());         // optional
+        newUser.setDepartment(user.getDepartment()); // optional
+        return ResponseEntity.ok(service.createUser(newUser));
     }
 
     @GetMapping("/{id}")
@@ -34,7 +42,7 @@ public class UserAccountController {
 
     @PutMapping("/{id}/status")
     public ResponseEntity<Void> updateStatus(@PathVariable Long id, @RequestParam boolean active) {
-        service.updateUserStatus(id, active); // call void method
+        service.updateUserStatus(id, active);
         return ResponseEntity.ok().build();
     }
 }
