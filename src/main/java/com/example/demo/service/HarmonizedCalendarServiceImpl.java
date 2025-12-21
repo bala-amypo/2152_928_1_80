@@ -45,4 +45,3 @@ public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService 
     }
 }
 
-
