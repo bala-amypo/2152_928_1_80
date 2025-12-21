@@ -1,61 +1,72 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "harmonized_calendars")
+@Table(name = "harmonized_calendar")
 public class HarmonizedCalendarEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    private LocalDateTime generatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "generatedBy")
+    @Column(nullable=false)
+    private String generatedBy;
+
+    // ❗ If you store user in DB as entity
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "generated_by_user_id", referencedColumnName = "id")
     private UserAccountEntity generatedByUser;
 
-    private LocalDateTime generatedAt;
-    private LocalDate effectiveFrom;
-    private LocalDate effectiveTo;
-
-    @Lob
-    private String eventsJson;
-
-    @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL)
+    // One generated calendar may produce merge logs
+    @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventMergeRecordEntity> mergeRecords;
 
-    @PrePersist
-    void onCreate() {
-        generatedAt = LocalDateTime.now();
+    /* ========= getters + setters ========= */
+
+    public Long getId() {
+        return id;
     }
 
-    // getters + setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public LocalDateTime getGeneratedAt() {
+        return generatedAt;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public void setGeneratedAt(LocalDateTime generatedAt) {
+        this.generatedAt = generatedAt;
+    }
+    
 
-    public UserAccountEntity getGeneratedByUser() { return generatedByUser; }
-    public void setGeneratedByUser(UserAccountEntity generatedByUser) { this.generatedByUser = generatedByUser; }
+    public String getGeneratedBy() {
+        return generatedBy;
+    }
 
-    public LocalDateTime getGeneratedAt() { return generatedAt; }
-    public void setGeneratedAt(LocalDateTime generatedAt) { this.generatedAt = generatedAt; }
+    public void setGeneratedBy(String generatedBy) {
+        this.generatedBy = generatedBy;
+    }
 
-    public LocalDate getEffectiveFrom() { return effectiveFrom; }
-    public void setEffectiveFrom(LocalDate effectiveFrom) { this.effectiveFrom = effectiveFrom; }
+    public UserAccountEntity getGeneratedByUser() {
+        return generatedByUser;
+    }
 
-    public LocalDate getEffectiveTo() { return effectiveTo; }
-    public void setEffectiveTo(LocalDate effectiveTo) { this.effectiveTo = effectiveTo; }
+    public void setGeneratedByUser(UserAccountEntity generatedByUser) {
+        this.generatedByUser = generatedByUser;
+    }
 
-    public String getEventsJson() { return eventsJson; }
-    public void setEventsJson(String eventsJson) { this.eventsJson = eventsJson; }
+    public List<EventMergeRecordEntity> getMergeRecords() {
+        return mergeRecords;
+    }
 
-    public List<EventMergeRecordEntity> getMergeRecords() { return mergeRecords; }
-    public void setMergeRecords(List<EventMergeRecordEntity> mergeRecords) { this.mergeRecords = mergeRecords; }
+    public void setMergeRecords(List<EventMergeRecordEntity> mergeRecords) {
+        this.mergeRecords = mergeRecords;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        generatedAt = LocalDateTime.now();
+    }
 }
