@@ -44,7 +44,8 @@ public class HarmonizedCalendarEntity {
     /**
      * One calendar may produce many event merge records
      */
-    @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL, orphanRemoval = true)
+    @
+    (mappedBy = "calendar", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventMergeRecordEntity> mergeRecords;
 
     /* ================= GETTERS / SETTERS ================= */
