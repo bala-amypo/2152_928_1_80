@@ -8,7 +8,10 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "user_account_entity", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(
+    name = "user_account",
+    uniqueConstraints = @UniqueConstraint(columnNames = "email")
+)
 public class UserAccountEntity {
 
     @Id
@@ -22,13 +25,15 @@ public class UserAccountEntity {
     @Email(message = "Invalid email")
     private String email;
 
-    // password optional now
     @JsonIgnore
     private String password;
 
     private String role = "USER";
+
     private String department;
+
     private boolean active = true;
+
     private LocalDateTime createdAt;
 
     @JsonIgnore
@@ -38,7 +43,7 @@ public class UserAccountEntity {
     public UserAccountEntity() {}
 
     @PrePersist
-    void prePersist() {
+    public void prePersist() {
         if (createdAt == null) {
             createdAt = LocalDateTime.now();
         }
