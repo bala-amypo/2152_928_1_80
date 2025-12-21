@@ -14,6 +14,14 @@ public class ClashRecordEntity {
     private Long eventAId;
     private Long eventBId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "eventAId", insertable = false, updatable = false)
+    private AcademicEventEntity eventA;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "eventBId", insertable = false, updatable = false)
+    private AcademicEventEntity eventB;
+
     private String clashType;
     private String severity;
     private String details;
@@ -28,28 +36,5 @@ public class ClashRecordEntity {
         if (resolved == null) resolved = false;
     }
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Long getEventAId() { return eventAId; }
-    public void setEventAId(Long eventAId) { this.eventAId = eventAId; }
-
-    public Long getEventBId() { return eventBId; }
-    public void setEventBId(Long eventBId) { this.eventBId = eventBId; }
-
-    public String getClashType() { return clashType; }
-    public void setClashType(String clashType) { this.clashType = clashType; }
-
-    public String getSeverity() { return severity; }
-    public void setSeverity(String severity) { this.severity = severity; }
-
-    public String getDetails() { return details; }
-    public void setDetails(String details) { this.details = details; }
-
-    public LocalDateTime getDetectedAt() { return detectedAt; }
-    public void setDetectedAt(LocalDateTime detectedAt) { this.detectedAt = detectedAt; }
-
-    public Boolean getResolved() { return resolved; }
-    public void setResolved(Boolean resolved) { this.resolved = resolved; }
+    // getters and setters
 }
