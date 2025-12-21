@@ -6,6 +6,14 @@ import com.example.demo.repository.HarmonizedCalendarRepository;
 import com.example.demo.service.HarmonizedCalendarService;
 import org.springframework.stereotype.Service;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +31,7 @@ public class HarmonizedCalendarServiceImpl implements HarmonizedCalendarService 
     public class HarmonizedCalendarController {
 
     @PostMapping("/generate")
-    public ResponseEntity<HarmonizedCalendarEntity> generateCalendar(
+    public HarmonizedCalenderEntity<HarmonizedCalendarEntity> generateCalendar(
             @RequestBody GenerateCalendarRequest request) {
 
             HarmonizedCalendarEntity calendar = service.generate(request);
