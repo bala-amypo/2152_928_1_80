@@ -5,7 +5,6 @@ import com.example.demo.service.UserAccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -33,10 +32,9 @@ public class UserAccountController {
         return ResponseEntity.ok(service.getAllUsers());
     }
 
-    // Fixed updateStatus method
     @PutMapping("/{id}/status")
     public ResponseEntity<Void> updateStatus(@PathVariable Long id, @RequestParam boolean active) {
         service.updateUserStatus(id, active); // call void method
-        return ResponseEntity.ok().build();   // return 200 OK without body
+        return ResponseEntity.ok().build();
     }
 }
