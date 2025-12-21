@@ -20,9 +20,16 @@ public class BranchProfileServiceImpl implements BranchProfileService {
 
     @Override
     public BranchProfileEntity createBranch(BranchProfileEntity branch) {
+        // check if branch code exists
         if (repository.findByBranchCode(branch.getBranchCode()) != null) {
             throw new ValidationException("Branch code already exists");
         }
+
+        // set branch reference on events
+        if (branch.getEvents() != null) {
+            branch.getEvents().forEach(e -> e.setBranch(branch));
+        }
+
         return repository.save(branch);
     }
 
@@ -41,15 +48,14 @@ public class BranchProfileServiceImpl implements BranchProfileService {
     @Override
     public BranchProfileEntity getBranchById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Branch not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Branch not found with id: " + id));
     }
 
     @Override
     public BranchProfileEntity findByBranchCode(String branchCode) {
         BranchProfileEntity branch = repository.findByBranchCode(branchCode);
         if (branch == null) {
-            throw new ResourceNotFoundException("Branch not found");
+            throw new ResourceNotFoundException("Branch not found with code: " + branchCode);
         }
         return branch;
     }
