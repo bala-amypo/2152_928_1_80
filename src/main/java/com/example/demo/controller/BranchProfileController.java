@@ -5,7 +5,6 @@ import com.example.demo.service.BranchProfileService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -25,8 +24,7 @@ public class BranchProfileController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BranchProfileEntity> getById(
-            @PathVariable Long id) {
+    public ResponseEntity<BranchProfileEntity> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getBranchById(id));
     }
 

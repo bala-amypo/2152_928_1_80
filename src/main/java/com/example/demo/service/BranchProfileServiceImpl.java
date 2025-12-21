@@ -6,6 +6,7 @@ import com.example.demo.exception.ValidationException;
 import com.example.demo.repository.BranchProfileRepository;
 import com.example.demo.service.BranchProfileService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,13 +20,12 @@ public class BranchProfileServiceImpl implements BranchProfileService {
     }
 
     @Override
+    @Transactional
     public BranchProfileEntity createBranch(BranchProfileEntity branch) {
-        // check if branch code exists
         if (repository.findByBranchCode(branch.getBranchCode()) != null) {
             throw new ValidationException("Branch code already exists");
         }
 
-        // set branch reference on events
         if (branch.getEvents() != null) {
             branch.getEvents().forEach(e -> e.setBranch(branch));
         }
