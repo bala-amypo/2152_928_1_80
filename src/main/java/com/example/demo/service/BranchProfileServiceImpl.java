@@ -27,7 +27,7 @@ public class BranchProfileServiceImpl implements BranchProfileService {
         }
 
         if (branch.getEvents() != null) {
-            branch.getEvents().forEach(e -> e.setBranch(branch));
+            branch.getEvents().forEach(e -> e.setBranch(branch)); // set branch reference
         }
 
         return repository.save(branch);
