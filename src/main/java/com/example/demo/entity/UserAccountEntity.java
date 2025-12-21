@@ -8,7 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "user_account_entity", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class UserAccountEntity {
 
     @Id
