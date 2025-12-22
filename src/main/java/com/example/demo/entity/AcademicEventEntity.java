@@ -65,16 +65,39 @@ public class AcademicEventEntity {
         this.branch = branch;
     }
     public String getEventType() {
-        return eventType; }
-    public void setEventType(String eventType) { this.eventType = eventType; }
-    public LocalDate getStartDate() { return startDate; }
-    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
-    public LocalDate getEndDate() { return endDate; }
-    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public LocalDateTime getSubmittedAt() { return submittedAt; }
-    public void setSubmittedAt(LocalDateTime submittedAt) { this.submittedAt = submittedAt; }
+        return eventType; 
+    }
+    public void setEventType(String eventType) {
+        this.eventType = eventType; 
+    }
+    public LocalDate getStartDate() { 
+        return startDate; 
+    }
+    public void setStartDate(LocalDate startDate) {
+         this.startDate = startDate;
+    }
+    public LocalDate getEndDate() { 
+        return endDate; 
+    }
+    public void setEndDate(LocalDate endDate) { 
+        this.endDate = endDate;
+         }
+    public String getLocation() { 
+        return location;
+         }
+    public void setLocation(String location) { 
+        this.location = location;
+         }
+    public String getDescription() {
+         return description;
+          }
+    public void setDescription(String description) {
+         this.description = description;
+          }
+    public LocalDateTime getSubmittedAt() {
+         return submittedAt;
+          }
+    public void setSubmittedAt(LocalDateTime submittedAt) {
+         this.submittedAt = submittedAt;
+          }
 }

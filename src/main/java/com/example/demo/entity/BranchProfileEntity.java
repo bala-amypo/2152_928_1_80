@@ -36,16 +36,40 @@ public class BranchProfileEntity {
     }
 
     // --- getters + setters ---
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getBranchCode() { return branchCode; }
-    public void setBranchCode(String branchCode) { this.branchCode = branchCode; }
-    public String getBranchName() { return branchName; }
-    public void setBranchName(String branchName) { this.branchName = branchName; }
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
-    public LocalDateTime getLastSyncAt() { return lastSyncAt; }
-    public void setLastSyncAt(LocalDateTime lastSyncAt) { this.lastSyncAt = lastSyncAt; }
-    public List<AcademicEventEntity> getEvents() { return events; }
-    public void setEvents(List<AcademicEventEntity> events) { this.events = events; }
+    public Long getId() {
+         return id;
+          }
+    public void setId(Long id) {
+         this.id = id;
+          }
+    public String getBranchCode() { 
+        return branchCode; 
+    }
+    public void setBranchCode(String branchCode) { 
+    this.branchCode = branchCode;
+     }
+    public String getBranchName() {
+         return branchName;
+          }
+    public void setBranchName(String branchName) { 
+        this.branchName = branchName; 
+        }
+    public boolean isActive() { 
+        return active; 
+    }
+    public void setActive(boolean active) { 
+        this.active = active;
+         }
+    public LocalDateTime getLastSyncAt() { 
+        return lastSyncAt; 
+        }
+    public void setLastSyncAt(LocalDateTime lastSyncAt) { 
+        this.lastSyncAt = lastSyncAt;
+         }
+    public List<AcademicEventEntity> getEvents() { 
+        return events;
+         }
+    public void setEvents(List<AcademicEventEntity> events) {
+         this.events = events;
+          }
 }
