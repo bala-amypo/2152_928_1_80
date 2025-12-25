@@ -32,10 +32,12 @@ public class UserAccountEntity {
     }
 
     @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        if (this.role == null) this.role = "REVIEWER";
-    }
+public void prePersist() {
+    this.createdAt = LocalDateTime.now();
+    if (this.role == null) this.role = "REVIEWER";
+    if (this.active == null) this.active = true;
+}
+
     private Boolean active;
 
 public Boolean getActive() {
