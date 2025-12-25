@@ -1,8 +1,9 @@
 package com.example.demo.security;
 
-import com.example.demo.entity.UserAccountEntity;
+import com.example.demo.entity.UserAccount;
 import io.jsonwebtoken.*;
-import javax.crypto.spec.SecretKeySpec;
+import io.jsonwebtoken.security.Keys;
+
 import java.security.Key;
 import java.util.*;
 
@@ -11,30 +12,26 @@ public class JwtUtil {
     private Key key;
 
     public void initKey() {
-        key = new SecretKeySpec(
-                Base64.getEncoder().encode("secretkey123456".getBytes()),
-                SignatureAlgorithm.HS256.getJcaName()
-        );
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     public String generateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(key)
                 .compact();
     }
 
-    public String generateTokenForUser(UserAccountEntity ua) {
+    public String generateTokenForUser(UserAccount user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("email", ua.getEmail());
-        claims.put("role", ua.getRole());
-        claims.put("userId", ua.getId());
-        return generateToken(claims, ua.getEmail());
-    }
+        claims.put("email", user.getEmail());
+        claims.put("role", user.getRole());
+        claims.put("userId", user.getId());
 
-    public boolean isTokenValid(String token, String email) {
-        return extractUsername(token).equals(email);
+        return generateToken(claims, user.getEmail());
     }
 
     public String extractUsername(String token) {
@@ -50,6 +47,10 @@ public class JwtUtil {
         return id == null ? null : Long.valueOf(id.toString());
     }
 
+    public boolean isTokenValid(String token, String username) {
+        return extractUsername(token).equals(username);
+    }
+
     public Jws<Claims> parseToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -57,4 +58,3 @@ public class JwtUtil {
                 .parseClaimsJws(token);
     }
 }
-    
