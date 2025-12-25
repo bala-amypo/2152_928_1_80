@@ -44,5 +44,9 @@ public class EventMergeRecordEntity {
     public void setMergedTitle(String t) { this.mergedTitle = t; }
     public void setMergedStartDate(LocalDate d) { this.mergedStartDate = d; }
     public void setMergedEndDate(LocalDate d) { this.mergedEndDate = d; }
+    public LocalDateTime getCreatedAt() {
+    return createdAt;
+}
+
     public void setMergeReason(String r) { this.mergeReason = r; }
 }

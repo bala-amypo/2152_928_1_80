@@ -36,6 +36,16 @@ public class UserAccountEntity {
         this.createdAt = LocalDateTime.now();
         if (this.role == null) this.role = "REVIEWER";
     }
+    private Boolean active;
+
+public Boolean getActive() {
+    return active;
+}
+
+public void setActive(Boolean active) {
+    this.active = active;
+}
+
 
     public Long getId() { return id; }
     public String getEmail() { return email; }

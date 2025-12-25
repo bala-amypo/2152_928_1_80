@@ -46,6 +46,10 @@ public class HarmonizedCalendarEntity {
     public void setId(Long id) { this.id = id; }
     public void setGeneratedBy(String by) { this.generatedBy = by; }
     public void setEffectiveFrom(LocalDate d) { this.effectiveFrom = d; }
+    public void setTitle(String title) {
+    this.title = title;
+}
+
     public void setEffectiveTo(LocalDate d) { this.effectiveTo = d; }
     public void setEventsJson(String j) { this.eventsJson = j; }
 }
