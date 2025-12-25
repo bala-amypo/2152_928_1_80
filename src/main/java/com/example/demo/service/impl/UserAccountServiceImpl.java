@@ -1,47 +1,36 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.UserAccountEntity;
-import com.example.demo.repository.UserAccountRepository;
-import com.example.demo.service.UserAccountService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
+import com.example.demo.entity.*;
+import com.example.demo.exception.*;
+import com.example.demo.repository.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Service
-@Transactional
-public class UserAccountServiceImpl implements UserAccountService {
+public class UserAccountServiceImpl {
 
-    private final UserAccountRepository repository;
+    private UserAccountRepository repo;
+    private PasswordEncoder encoder;
 
-    public UserAccountServiceImpl(UserAccountRepository repository) {
-        this.repository = repository;
+    public UserAccountServiceImpl(UserAccountRepository r, PasswordEncoder e) {
+        this.repo = r;
+        this.encoder = e;
     }
 
-    @Override
-    public UserAccountEntity createUser(UserAccountEntity user) {
-        // unique email check
-        if (repository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Email already exists");
-        }
+    public UserAccount register(UserAccount u) {
+        if (repo.existsByEmail(u.getEmail()))
+            throw new ValidationException("Email already in use");
 
-        return repository.save(user);
+        if (u.getPassword().length() < 8)
+            throw new ValidationException("Password must be at least 8 characters");
+
+        u.setRole(u.getRole() == null ? "REVIEWER" : u.getRole());
+        u.prePersist();
+        u = new UserAccount(null, null, u.getEmail(),
+                encoder.encode(u.getPassword()), u.getRole(), null, u.getCreatedAt());
+        return repo.save(u);
     }
 
-    @Override
-    public UserAccountEntity getUserById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
-
-    @Override
-    public List<UserAccountEntity> getAllUsers() {
-        return repository.findAll();
-    }
-
-    @Override
-    public void updateUserStatus(Long id, boolean active) {
-        UserAccountEntity user = getUserById(id);
-        user.setActive(active);
-        repository.save(user);
+    public UserAccount getUser(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }

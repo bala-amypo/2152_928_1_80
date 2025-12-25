@@ -1,9 +1,10 @@
 package com.example.demo.security;
 
-import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.entity.UserAccount;
+import com.example.demo.repository.UserAccountRepository;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import java.util.List;
 
 public class CustomUserDetailsService implements UserDetailsService {
@@ -15,17 +16,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
-
-        UserAccount user = repo.findByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found"));
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
-        );
+    public UserDetails loadUserByUsername(String email) {
+        UserAccount u = repo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return new User(u.getEmail(), u.getPassword(),
+                List.of(new SimpleGrantedAuthority("ROLE_" + u.getRole())));
     }
 }
