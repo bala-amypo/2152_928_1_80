@@ -9,23 +9,21 @@ public class ClashRecord {
     private Long eventBId;
     private String clashType;
     private String severity;
-    private String description;
     private LocalDateTime detectedAt;
     private Boolean resolved;
 
     public ClashRecord() {}
 
-    public ClashRecord(Long id, Long a, Long b, String type,
-                       String severity, String desc,
-                       LocalDateTime detectedAt, Boolean resolved) {
+    public ClashRecord(Long id, Long a, Long b, String t,
+                       String s, String d,
+                       LocalDateTime at, Boolean r) {
         this.id = id;
         this.eventAId = a;
         this.eventBId = b;
-        this.clashType = type;
-        this.severity = severity;
-        this.description = desc;
-        this.detectedAt = detectedAt;
-        this.resolved = resolved;
+        this.clashType = t;
+        this.severity = s;
+        this.detectedAt = at;
+        this.resolved = r;
     }
 
     public void prePersist() {
@@ -33,6 +31,16 @@ public class ClashRecord {
         if (resolved == null) resolved = false;
     }
 
-    public void setResolved(Boolean resolved) { this.resolved = resolved; }
+    // setters
+    public void setEventAId(Long v) { eventAId = v; }
+    public void setEventBId(Long v) { eventBId = v; }
+    public void setClashType(String v) { clashType = v; }
+    public void setSeverity(String v) { severity = v; }
+    public void setResolved(Boolean v) { resolved = v; }
+
+    // getters
+    public Long getEventAId() { return eventAId; }
+    public Long getEventBId() { return eventBId; }
     public Boolean getResolved() { return resolved; }
+    public LocalDateTime getDetectedAt() { return detectedAt; }
 }

@@ -30,22 +30,24 @@ public class JwtUtil {
         return generateToken(c, u.getEmail());
     }
 
-    public Claims parseToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build()
-                .parseClaimsJws(token).getBody();
+    /** 🔥 MUST return Jws<Claims> */
+    public Jws<Claims> parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
     }
 
     public String extractUsername(String token) {
-        return parseToken(token).getSubject();
+        return parseToken(token).getBody().getSubject();
     }
 
     public String extractRole(String token) {
-        return (String) parseToken(token).get("role");
+        return (String) parseToken(token).getBody().get("role");
     }
 
     public Long extractUserId(String token) {
-        Object id = parseToken(token).get("userId");
-        return id == null ? null : Long.valueOf(id.toString());
+        return Long.valueOf(parseToken(token).getBody().get("userId").toString());
     }
 
     public boolean isTokenValid(String token, String username) {

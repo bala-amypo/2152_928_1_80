@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import java.time.*;
-import java.time.LocalDate;
 
 public class HarmonizedCalendar {
 
@@ -15,15 +14,15 @@ public class HarmonizedCalendar {
 
     public HarmonizedCalendar() {}
 
-    public HarmonizedCalendar(Long id, String title, String by,
-                              LocalDateTime genAt,
-                              LocalDate from, LocalDate to,
+    public HarmonizedCalendar(Long id, String t, String by,
+                              LocalDateTime at,
+                              LocalDate f, LocalDate to,
                               String json) {
         this.id = id;
-        this.title = title;
+        this.title = t;
         this.generatedBy = by;
-        this.generatedAt = genAt;
-        this.effectiveFrom = from;
+        this.generatedAt = at;
+        this.effectiveFrom = f;
         this.effectiveTo = to;
         this.eventsJson = json;
     }
@@ -32,11 +31,18 @@ public class HarmonizedCalendar {
         if (generatedAt == null) generatedAt = LocalDateTime.now();
     }
 
-    public void setId(Long id) { this.id = id; }
-    public Long getId() { return id; }
-    public String getGeneratedBy() { return generatedBy; }
+    // setters
+    public void setGeneratedBy(String v) { generatedBy = v; }
+    public void setEffectiveFrom(LocalDate v) { effectiveFrom = v; }
+    public void setEffectiveTo(LocalDate v) { effectiveTo = v; }
+
+    // getters
     public String getTitle() { return title; }
+    public String getGeneratedBy() { return generatedBy; }
+    public LocalDateTime getGeneratedAt() { return generatedAt; }
     public LocalDate getEffectiveFrom() { return effectiveFrom; }
     public LocalDate getEffectiveTo() { return effectiveTo; }
     public String getEventsJson() { return eventsJson; }
+    public void setId(Long id) { this.id = id; }
+    public Long getId() { return id; }
 }
