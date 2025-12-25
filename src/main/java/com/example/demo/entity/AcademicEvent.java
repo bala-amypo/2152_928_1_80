@@ -10,33 +10,38 @@ public class AcademicEvent {
     private String eventType;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String location;
-    private String description;
     private LocalDateTime submittedAt;
 
     public AcademicEvent() {}
 
-    public AcademicEvent(Long id, Long branchId, String title, String type,
-                         LocalDate start, LocalDate end,
-                         String location, String desc, LocalDateTime submittedAt) {
+    public AcademicEvent(Long id, Long branchId, String title,
+                         String type, LocalDate s, LocalDate e,
+                         String l, String d, LocalDateTime at) {
         this.id = id;
         this.branchId = branchId;
         this.title = title;
         this.eventType = type;
-        this.startDate = start;
-        this.endDate = end;
-        this.location = location;
-        this.description = desc;
-        this.submittedAt = submittedAt;
+        this.startDate = s;
+        this.endDate = e;
+        this.submittedAt = at;
     }
 
     public void prePersist() {
         if (submittedAt == null) submittedAt = LocalDateTime.now();
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // setters
+    public void setBranchId(Long v) { branchId = v; }
+    public void setTitle(String v) { title = v; }
+    public void setEventType(String v) { eventType = v; }
+    public void setStartDate(LocalDate v) { startDate = v; }
+    public void setEndDate(LocalDate v) { endDate = v; }
+
+    // getters
+    public LocalDateTime getSubmittedAt() { return submittedAt; }
     public Long getBranchId() { return branchId; }
     public LocalDate getStartDate() { return startDate; }
     public LocalDate getEndDate() { return endDate; }
+    public void setId(Long id) { this.id = id; }
+    public Long getId() { return id; }
 }

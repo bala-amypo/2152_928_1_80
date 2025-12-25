@@ -13,8 +13,9 @@ public class BranchProfile {
 
     public BranchProfile() {}
 
-    public BranchProfile(Long id, String code, String name, String email,
-                         LocalDateTime lastSyncAt, Boolean active) {
+    public BranchProfile(Long id, String code, String name,
+                         String email, LocalDateTime lastSyncAt,
+                         Boolean active) {
         this.id = id;
         this.branchCode = code;
         this.branchName = name;
@@ -28,9 +29,14 @@ public class BranchProfile {
         if (active == null) active = true;
     }
 
+    // getters & setters
+    public void setBranchCode(String v) { branchCode = v; }
+    public void setBranchName(String v) { branchName = v; }
+    public void setContactEmail(String v) { contactEmail = v; }
+    public LocalDateTime getLastSyncAt() { return lastSyncAt; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean a) { active = a; }
+    public String getBranchCode() { return branchCode; }
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public String getBranchCode() { return branchCode; }
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
 }
