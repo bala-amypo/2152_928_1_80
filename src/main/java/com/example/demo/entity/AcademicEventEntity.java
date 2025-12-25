@@ -20,6 +20,10 @@ public class AcademicEventEntity {
     private String description;
     private LocalDateTime submittedAt;
 
+    // Dummy reference required by service (NOT persisted)
+    @Transient
+    private BranchProfileEntity branch;
+
     public AcademicEventEntity() {}
 
     public AcademicEventEntity(Long id, Long branchId, String title, String eventType,
@@ -41,30 +45,66 @@ public class AcademicEventEntity {
         this.submittedAt = LocalDateTime.now();
     }
 
-    public Long getId() { return id; }
-    public Long getBranchId() { return branchId; }
-    public LocalDate getStartDate() { return startDate; }
-    public LocalDate getEndDate() { return endDate; }
-    public void setId(Long id) { this.id = id; }
+    // ===== GETTERS =====
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
 
     public String getEventType() {
-    return eventType;
-}
+        return eventType;
+    }
 
-public void setStartDate(LocalDate startDate) {
-    this.startDate = startDate;
-}
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
-public void setEndDate(LocalDate endDate) {
-    this.endDate = endDate;
-}
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
-public String getLocation() {
-    return venue;
-}
+    public String getLocation() {
+        return venue;
+    }
 
-public String getDescription() {
-    return description;
-}
+    public String getDescription() {
+        return description;
+    }
 
+    // ===== SETTERS REQUIRED BY SERVICES =====
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setLocation(String location) {
+        // service uses "location", entity stores it as "venue"
+        this.venue = location;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    // ===== Dummy setter required by BranchProfileServiceImpl =====
+
+    public void setBranch(BranchProfileEntity branch) {
+        this.branch = branch;
+    }
 }
