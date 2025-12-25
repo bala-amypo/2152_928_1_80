@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class UserAccount {
+@Table(name = "user_accounts")
+public class UserAccountEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +18,10 @@ public class UserAccount {
     private String department;
     private LocalDateTime createdAt;
 
-    public UserAccount() {}
+    public UserAccountEntity() {}
 
-    public UserAccount(Long id, String name, String email, String password,
-                       String role, String department, LocalDateTime createdAt) {
+    public UserAccountEntity(Long id, String name, String email, String password,
+                             String role, String department, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -36,18 +37,11 @@ public class UserAccount {
         if (this.role == null) this.role = "REVIEWER";
     }
 
-    // getters & setters
     public Long getId() { return id; }
-    public String getName() { return name; }
     public String getEmail() { return email; }
     public String getPassword() { return password; }
     public String getRole() { return role; }
-    public String getDepartment() { return department; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-
     public void setId(Long id) { this.id = id; }
-    public void setEmail(String email) { this.email = email; }
     public void setPassword(String password) { this.password = password; }
     public void setRole(String role) { this.role = role; }
-    public void setDepartment(String department) { this.department = department; }
 }

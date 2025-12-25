@@ -1,6 +1,6 @@
 package com.example.demo.security;
 
-import com.example.demo.entity.UserAccount;
+import com.example.demo.entity.UserAccountEntity;
 import io.jsonwebtoken.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
@@ -25,7 +25,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String generateTokenForUser(UserAccount ua) {
+    public String generateTokenForUser(UserAccountEntity ua) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", ua.getEmail());
         claims.put("role", ua.getRole());
@@ -57,3 +57,4 @@ public class JwtUtil {
                 .parseClaimsJws(token);
     }
 }
+    

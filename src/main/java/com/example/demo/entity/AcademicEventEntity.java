@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import java.time.*;
 
 @Entity
-public class AcademicEvent {
+@Table(name = "academic_events")
+public class AcademicEventEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +20,11 @@ public class AcademicEvent {
     private String description;
     private LocalDateTime submittedAt;
 
-    public AcademicEvent() {}
+    public AcademicEventEntity() {}
 
-    public AcademicEvent(Long id, Long branchId, String title, String eventType,
-                         LocalDate startDate, LocalDate endDate,
-                         String venue, String description, LocalDateTime submittedAt) {
+    public AcademicEventEntity(Long id, Long branchId, String title, String eventType,
+                               LocalDate startDate, LocalDate endDate,
+                               String venue, String description, LocalDateTime submittedAt) {
         this.id = id;
         this.branchId = branchId;
         this.title = title;
@@ -40,7 +41,6 @@ public class AcademicEvent {
         this.submittedAt = LocalDateTime.now();
     }
 
-    // getters
     public Long getId() { return id; }
     public Long getBranchId() { return branchId; }
     public LocalDate getStartDate() { return startDate; }

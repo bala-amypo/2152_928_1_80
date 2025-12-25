@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class ClashRecord {
+@Table(name = "clash_records")
+public class ClashRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +19,11 @@ public class ClashRecord {
     private LocalDateTime detectedAt;
     private Boolean resolved;
 
-    public ClashRecord() {}
+    public ClashRecordEntity() {}
 
-    public ClashRecord(Long id, Long a, Long b, String type,
-                       String severity, String desc,
-                       LocalDateTime dt, Boolean resolved) {
+    public ClashRecordEntity(Long id, Long a, Long b, String type,
+                             String severity, String desc,
+                             LocalDateTime dt, Boolean resolved) {
         this.id = id;
         this.eventAId = a;
         this.eventBId = b;
@@ -40,5 +41,5 @@ public class ClashRecord {
     }
 
     public Boolean getResolved() { return resolved; }
-    public void setResolved(Boolean r) { this.resolved = r; }
+    public void setResolved(Boolean resolved) { this.resolved = resolved; }
 }

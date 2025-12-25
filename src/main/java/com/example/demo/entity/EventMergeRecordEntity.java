@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import java.time.*;
 
 @Entity
-public class EventMergeRecord {
+@Table(name = "event_merge_records")
+public class EventMergeRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +18,11 @@ public class EventMergeRecord {
     private String mergeReason;
     private LocalDateTime createdAt;
 
-    public EventMergeRecord() {}
+    public EventMergeRecordEntity() {}
 
-    public EventMergeRecord(Long id, String sourceEventIds, String mergedTitle,
-                            LocalDate mergedStartDate, LocalDate mergedEndDate,
-                            String mergeReason, LocalDateTime createdAt) {
+    public EventMergeRecordEntity(Long id, String sourceEventIds, String mergedTitle,
+                                  LocalDate mergedStartDate, LocalDate mergedEndDate,
+                                  String mergeReason, LocalDateTime createdAt) {
         this.id = id;
         this.sourceEventIds = sourceEventIds;
         this.mergedTitle = mergedTitle;
@@ -36,11 +37,10 @@ public class EventMergeRecord {
         this.createdAt = LocalDateTime.now();
     }
 
-    // getters/setters
     public Long getId() { return id; }
     public String getSourceEventIds() { return sourceEventIds; }
     public void setId(Long id) { this.id = id; }
-    public void setSourceEventIds(String s) { this.sourceEventIds = s; }
+    public void setSourceEventIds(String ids) { this.sourceEventIds = ids; }
     public void setMergedTitle(String t) { this.mergedTitle = t; }
     public void setMergedStartDate(LocalDate d) { this.mergedStartDate = d; }
     public void setMergedEndDate(LocalDate d) { this.mergedEndDate = d; }
