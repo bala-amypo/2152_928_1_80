@@ -1,20 +1,36 @@
-package com.example.demo.config;
+# ===============================
+# Application
+# ===============================
+spring.application.name=multi-branch-academic-calendar-harmonizer
+server.port=9001
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.servers.Server;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import java.util.List;
+# ===============================
+# MySQL Database
+# ===============================
+spring.datasource.url=jdbc:mysql://localhost:3306/Academic_Calendar?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=Amypo
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
-@Configuration
-public class SwaggerConfig {
+# ===============================
+# JPA / Hibernate
+# ===============================
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.open-in-view=false
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                // You need to change the port as per your server
-                .servers(List.of(
-                        new Server().url("https://9166.408procr.amypo.ai/")
-                ));
-        }
-}
+# ===============================
+# Swagger / OpenAPI
+# ===============================
+springdoc.api-docs.path=/v3/api-docs
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.swagger-ui.operationsSorter=method
+springdoc.swagger-ui.tagsSorter=alpha
+
+# ===============================
+# Logging (optional but useful)
+# ===============================
+logging.level.org.springframework.security=INFO
+logging.level.org.hibernate.SQL=DEBUG
