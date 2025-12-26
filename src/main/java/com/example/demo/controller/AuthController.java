@@ -33,11 +33,12 @@ public class AuthController {
     public ApiResponse<UserAccount> register(@RequestBody RegisterRequest req) {
 
         UserAccount user = new UserAccount();
-        user.setFullName(req.name);
-        user.setEmail(req.email);
-        user.setPassword(req.password);
-        user.setRole(req.role);
-        user.setDepartment(req.department);
+        user.setFullName(req.getName());
+user.setEmail(req.getEmail());
+user.setPassword(req.getPassword());
+user.setRole(req.getRole());
+user.setDepartment(req.getDepartment());
+
 
         UserAccount saved = userService.register(user);
         return new ApiResponse<>(true, "User registered", saved);
@@ -47,9 +48,8 @@ public class AuthController {
     @Operation(summary = "Login and generate JWT")
     public ApiResponse<String> login(@RequestBody LoginRequest req) {
 
-        UserAccount user = userService.findByEmail(req.email);
-
-        if (!passwordEncoder.matches(req.password, user.getPassword())) {
+        UserAccount user = userService.findByEmail(req.getEmail());
+if (!passwordEncoder.matches(req.getPassword(), user.getPassword()))  {
             throw new RuntimeException("Invalid credentials");
         }
 
