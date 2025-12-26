@@ -3,15 +3,17 @@ package com.example.demo.security;
 import com.example.demo.entity.UserAccount;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+
 import java.security.Key;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JwtUtil {
 
     private Key key;
 
     public void initKey() {
-        key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     public String generateToken(Map<String, Object> claims, String subject) {
@@ -22,32 +24,39 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String generateTokenForUser(UserAccount u) {
-        Map<String, Object> c = new HashMap<>();
-        c.put("email", u.getEmail());
-        c.put("role", u.getRole());
-        c.put("userId", u.getId());
-        return generateToken(c, u.getEmail());
+    public String generateTokenForUser(UserAccount user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", user.getEmail());
+        claims.put("role", user.getRole());
+        claims.put("userId", user.getId());
+        return generateToken(claims, user.getEmail());
     }
 
-    /** 🔥 MUST return Jws<Claims> */
-    public Jws<Claims> parseToken(String token) {
-        return Jwts.parserBuilder()
+    /**
+     * 🔥 CRITICAL:
+     * Tests expect: parseToken(token).getPayload()
+     */
+    public JwtPayloadWrapper parseToken(String token) {
+        Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(token);
+                .parseClaimsJws(token)
+                .getBody();
+
+        return new JwtPayloadWrapper(claims);
     }
 
     public String extractUsername(String token) {
-        return parseToken(token).getBody().getSubject();
+        return parseToken(token).getPayload().getSubject();
     }
 
     public String extractRole(String token) {
-        return (String) parseToken(token).getBody().get("role");
+        return (String) parseToken(token).getPayload().get("role");
     }
 
     public Long extractUserId(String token) {
-        return Long.valueOf(parseToken(token).getBody().get("userId").toString());
+        Object id = parseToken(token).getPayload().get("userId");
+        return id == null ? null : Long.valueOf(id.toString());
     }
 
     public boolean isTokenValid(String token, String username) {
