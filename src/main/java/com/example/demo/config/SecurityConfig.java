@@ -17,52 +17,55 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public JwtUtil jwtUtil() {
-        JwtUtil jwtUtil = new JwtUtil();
-        jwtUtil.initKey();
-        return jwtUtil;
-    }
+@Bean
+public JwtUtil jwtUtil() {
+JwtUtil jwtUtil = new JwtUtil();
+jwtUtil.initKey();
+return jwtUtil;
+}
 
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
-        return new JwtAuthenticationFilter(jwtUtil);
-    }
+@Bean
+public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
+return new JwtAuthenticationFilter(jwtUtil);
+}
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+@Bean
+public SecurityFilterChain securityFilterChain(
+HttpSecurity http,
+JwtAuthenticationFilter jwtAuthenticationFilter
+) throws Exception {
 
-        http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(
-                            "/auth/**",
-                            "/swagger-ui/**",
-                            "/v3/api-docs/**",
-                            "/simple-status"
-                    ).permitAll()
-                    .anyRequest().authenticated()
-            )
-            .addFilterBefore(
-                    jwtAuthenticationFilter,
-                    UsernamePasswordAuthenticationFilter.class
-            );
+http
+.csrf(csrf -> csrf.disable())
+.cors(cors -> {})
+.authorizeHttpRequests(auth -> auth
+.requestMatchers(
+"/auth/register",
+"/auth/login",
+"/v3/api-docs/**",
+"/swagger-ui/**",
+"/swagger-ui.html"
+).permitAll()
+.anyRequest().authenticated()
+)
+.sessionManagement(session ->
+session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+);
 
-        return http.build();
-    }
+http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+return http.build();
+}
 
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+@Bean
+public PasswordEncoder passwordEncoder() {
+return new BCryptPasswordEncoder();
+}
+
+@Bean
+public AuthenticationManager authenticationManager(
+AuthenticationConfiguration configuration
+) throws Exception {
+return configuration.getAuthenticationManager();
+}
 }
