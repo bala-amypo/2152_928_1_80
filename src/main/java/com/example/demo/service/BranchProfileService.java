@@ -1,33 +1,18 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.entity.BranchProfile;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.BranchProfileRepository;
 
 import java.util.List;
 
-public class BranchProfileServiceImpl {
+public interface BranchProfileService {
 
-    private final BranchProfileRepository repository;
+    BranchProfile createBranch(BranchProfile branch);
 
-    public BranchProfileServiceImpl(BranchProfileRepository repository) {
-        this.repository = repository;
-    }
+    BranchProfile updateBranchStatus(Long id, boolean active);
 
-    public BranchProfile createBranch(BranchProfile branch) {
-        branch.prePersist();
-        return repository.save(branch);
-    }
+    List<BranchProfile> getAllBranches();
 
-    public BranchProfile updateBranchStatus(Long id, boolean active) {
-        BranchProfile branch = repository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Branch not found"));
-        branch.setActive(active);
-        return repository.save(branch);
-    }
+    BranchProfile getBranchById(Long id);
 
-    public List<BranchProfile> getAllBranches() {
-        return repository.findAll();
-    }
+    BranchProfile findByBranchCode(String branchCode);
 }

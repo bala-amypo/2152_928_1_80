@@ -1,34 +1,18 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.entity.AcademicEvent;
-import com.example.demo.exception.ValidationException;
-import com.example.demo.repository.AcademicEventRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 
-public class AcademicEventServiceImpl {
+public interface AcademicEventService {
 
-    private final AcademicEventRepository repository;
+    AcademicEvent createEvent(AcademicEvent event);
 
-    public AcademicEventServiceImpl(AcademicEventRepository repository) {
-        this.repository = repository;
-    }
+    AcademicEvent updateEvent(Long id, AcademicEvent event);
 
-    public AcademicEvent createEvent(AcademicEvent event) {
+    AcademicEvent getEventById(Long id);
 
-        LocalDate start = event.getStartDate();
-        LocalDate end = event.getEndDate();
+    List<AcademicEvent> getEventsByBranch(Long branchId);
 
-        if (start != null && end != null && start.isAfter(end)) {
-            throw new ValidationException("startDate cannot be after endDate");
-        }
-
-        event.prePersist();
-        return repository.save(event);
-    }
-
-    public List<AcademicEvent> getEventsByBranch(Long branchId) {
-        return repository.findByBranchId(branchId);
-    }
+    List<AcademicEvent> getAllEvents();
 }
