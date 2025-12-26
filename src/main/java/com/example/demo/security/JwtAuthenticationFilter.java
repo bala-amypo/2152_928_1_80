@@ -28,7 +28,7 @@ FilterChain filterChain
 
 String path = request.getRequestURI();
 
-/* 🔴 VERY IMPORTANT: Skip JWT for public endpoints */
+/* ✅ Skip JWT for public endpoints */
 if (
 path.startsWith("/auth/")
 || path.startsWith("/v3/api-docs")
@@ -40,7 +40,7 @@ return;
 
 String authHeader = request.getHeader("Authorization");
 
-/* 🔴 If no token, just continue (DON'T block here) */
+/* ✅ If no token, continue (Spring Security will handle access) */
 if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 filterChain.doFilter(request, response);
 return;
@@ -52,11 +52,7 @@ if (jwtUtil.validateToken(token)) {
 String username = jwtUtil.extractUsername(token);
 
 UsernamePasswordAuthenticationToken authentication =
-new UsernamePasswordAuthenticationToken(
-username,
-null,
-jwtUtil.getAuthorities(token)
-);
+new UsernamePasswordAuthenticationToken(username, null, null);
 
 authentication.setDetails(
 new WebAuthenticationDetailsSource().buildDetails(request)
