@@ -1,10 +1,10 @@
-package com.example.demo.config;
+package com.example.demo.security;
 
-import com.example.demo.security.JwtUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,26 +27,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        String header = request.getHeader("Authorization");
+        String authHeader = request.getHeader("Authorization");
 
-        if (header != null && header.startsWith("Bearer ")) {
-            String token = header.substring(7);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
-            try {
-                Jws<Claims> claims = jwtUtil.validateToken(token);
-                String email = claims.getBody().getSubject();
-                String role = (String) claims.getBody().get("role");
+            String token = authHeader.substring(7);
 
-                UsernamePasswordAuthenticationToken auth =
+            // ✅ FIX: validateToken now returns boolean
+            if (jwtUtil.validateToken(token)) {
+
+                String email = jwtUtil.extractUsername(token);
+                String role = jwtUtil.extractRole(token);
+
+                UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 email,
                                 null,
                                 List.of(new SimpleGrantedAuthority("ROLE_" + role))
                         );
 
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            } catch (Exception ignored) {
-                // Invalid token → request will be blocked by security config
+                SecurityContextHolder.getContext()
+                        .setAuthentication(authentication);
             }
         }
 
