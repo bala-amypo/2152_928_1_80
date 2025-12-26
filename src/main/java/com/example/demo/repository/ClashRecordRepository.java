@@ -1,10 +1,13 @@
 package com.example.demo.repository;
 
-import java.util.*;
-import com.example.demo.entity.*;
-public interface ClashRecordRepository {
-    Optional<ClashRecord> findById(Long id);
-    ClashRecord save(ClashRecord c);
+import com.example.demo.entity.ClashRecord;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ClashRecordRepository extends JpaRepository<ClashRecord, Long> {
+
+    List<ClashRecord> findByEventAIdOrEventBId(Long eventAId, Long eventBId);
+
     List<ClashRecord> findByResolvedFalse();
-    List<ClashRecord> findByEventAIdOrEventBId(Long a, Long b);
 }

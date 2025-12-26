@@ -1,16 +1,16 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.HarmonizedCalendar;
-import java.time.LocalDate;   // ✅ ADD THIS
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.time.LocalDate;
 import java.util.List;
 
-public interface HarmonizedCalendarRepository {
-
-    HarmonizedCalendar save(HarmonizedCalendar h);
+public interface HarmonizedCalendarRepository
+        extends JpaRepository<HarmonizedCalendar, Long> {
 
     List<HarmonizedCalendar>
     findByEffectiveFromLessThanEqualAndEffectiveToGreaterThanEqual(
-            LocalDate from,
-            LocalDate to
+            LocalDate start, LocalDate end
     );
 }
