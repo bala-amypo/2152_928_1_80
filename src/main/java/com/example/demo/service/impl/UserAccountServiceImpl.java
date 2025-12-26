@@ -5,29 +5,6 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.exception.ValidationException;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-public class UserAccountServiceImpl implements UserAccountService {
-
-    private final UserAccountRepository repository;
-    private final PasswordEncoder passwordEncoder;
-
-    public UserAccountServiceImpl(UserAccountRepository repository,
-                                  PasswordEncoder passwordEncoder) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-    }
-package com.example.demo.service.impl;
-
-import com.example.demo.entity.UserAccount;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ValidationException;
-import com.example.demo.repository.UserAccountRepository;
-import com.example.demo.service.UserAccountService;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,11 +14,9 @@ import java.util.List;
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    // ✅ FIELD WAS MISSING / MISNAMED — THIS FIXES IT
     private final UserAccountRepository userAccountRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // ✅ CONSTRUCTOR INJECTION (REQUIRED BY TESTS)
     public UserAccountServiceImpl(UserAccountRepository userAccountRepository,
                                   PasswordEncoder passwordEncoder) {
         this.userAccountRepository = userAccountRepository;
@@ -55,7 +30,6 @@ public class UserAccountServiceImpl implements UserAccountService {
             throw new ValidationException("Email already in use");
         }
 
-        // ✅ REQUIRED BY t73_passwordMinLengthValidation
         if (user.getPassword() == null || user.getPassword().length() < 8) {
             throw new ValidationException("Password must be at least 8 characters");
         }
@@ -85,44 +59,5 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public List<UserAccount> getAllUsers() {
         return userAccountRepository.findAll();
-    }
-}
-
-    @Override
-public UserAccount register(UserAccount user) {
-
-    if (userAccountRepository.existsByEmail(user.getEmail())) {
-        throw new ValidationException("Email already in use");
-    }
-
-    // ✅ FIX: password length validation (REQUIRED BY TEST)
-    if (user.getPassword() == null || user.getPassword().length() < 8) {
-        throw new ValidationException("Password must be at least 8 characters");
-    }
-
-    if (user.getRole() == null) {
-        user.setRole("REVIEWER");
-    }
-
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
-    return userAccountRepository.save(user);
-}
-
-
-    @Override
-    public UserAccount findByEmail(String email) {
-        return repository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-    }
-
-    @Override
-    public UserAccount getUser(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-    }
-
-    @Override
-    public List<UserAccount> getAllUsers() {
-        return repository.findAll();
     }
 }
