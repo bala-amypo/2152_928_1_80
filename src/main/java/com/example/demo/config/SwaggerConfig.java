@@ -1,36 +1,35 @@
-# ===============================
-# Application
-# ===============================
-spring.application.name=multi-branch-academic-calendar-harmonizer
-server.port=9001
+package com.example.demo.config;
 
-# ===============================
-# MySQL Database
-# ===============================
-spring.datasource.url=jdbc:mysql://localhost:3306/Academic_Calendar?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-spring.datasource.username=root
-spring.datasource.password=Amypo
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-# ===============================
-# JPA / Hibernate
-# ===============================
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
-spring.jpa.open-in-view=false
+@Configuration
+public class SwaggerConfig {
 
-# ===============================
-# Swagger / OpenAPI
-# ===============================
-springdoc.api-docs.path=/v3/api-docs
-springdoc.swagger-ui.path=/swagger-ui.html
-springdoc.swagger-ui.operationsSorter=method
-springdoc.swagger-ui.tagsSorter=alpha
+    @Bean
+    public OpenAPI openAPI() {
 
-# ===============================
-# Logging (optional but useful)
-# ===============================
-logging.level.org.springframework.security=INFO
-logging.level.org.hibernate.SQL=DEBUG
+        final String securitySchemeName = "bearerAuth";
+
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Multi-Branch Academic Calendar Harmonizer")
+                        .description("Centralized system for harmonizing academic calendars across branches")
+                        .version("1.0.0"))
+                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+                .components(
+                        new io.swagger.v3.oas.models.Components()
+                                .addSecuritySchemes(securitySchemeName,
+                                        new SecurityScheme()
+                                                .name(securitySchemeName)
+                                                .type(SecurityScheme.Type.HTTP)
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")
+                                )
+                );
+    }
+}
