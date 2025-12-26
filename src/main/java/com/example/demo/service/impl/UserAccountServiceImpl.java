@@ -23,19 +23,25 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccount register(UserAccount user) {
+public UserAccount register(UserAccount user) {
 
-        if (repository.existsByEmail(user.getEmail())) {
-            throw new ValidationException("Email already in use");
-        }
-
-        if (user.getRole() == null) {
-            user.setRole("REVIEWER");
-        }
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return repository.save(user);
+    if (userAccountRepository.existsByEmail(user.getEmail())) {
+        throw new ValidationException("Email already in use");
     }
+
+    // ✅ FIX: password length validation (REQUIRED BY TEST)
+    if (user.getPassword() == null || user.getPassword().length() < 8) {
+        throw new ValidationException("Password must be at least 8 characters");
+    }
+
+    if (user.getRole() == null) {
+        user.setRole("REVIEWER");
+    }
+
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    return userAccountRepository.save(user);
+}
+
 
     @Override
     public UserAccount findByEmail(String email) {
