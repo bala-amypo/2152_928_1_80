@@ -16,7 +16,7 @@ public class JwtUtil {
 
     private SecretKey key;
 
-    /* Initialize secret key */
+    /* ================= INITIALIZE SECRET KEY ================= */
     public void initKey() {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
