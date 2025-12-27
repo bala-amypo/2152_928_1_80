@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import com.example.demo.entity.UserAccount;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -26,7 +27,7 @@ public class JwtUtil {
        TOKEN GENERATION
        ===================================================== */
 
-    // ✅ Used by AuthController
+    // Used by AuthController
     public String generateTokenForUser(UserAccount user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole());
@@ -34,16 +35,16 @@ public class JwtUtil {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(user.getEmail())   // EMAIL = USERNAME
+                .setSubject(user.getEmail())   // email = username
                 .setIssuedAt(new Date())
                 .setExpiration(
                         new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)
-                ) // 24 hours
+                )
                 .signWith(key)
                 .compact();
     }
 
-    // ✅ REQUIRED BY TESTS
+    // REQUIRED BY TESTS
     public String generateToken(Map<String, Object> claims, String username) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -51,7 +52,7 @@ public class JwtUtil {
                 .setIssuedAt(new Date())
                 .setExpiration(
                         new Date(System.currentTimeMillis() + 1000 * 60 * 60)
-                ) // 1 hour
+                )
                 .signWith(key)
                 .compact();
     }
@@ -62,14 +63,14 @@ public class JwtUtil {
 
     public boolean validateToken(String token) {
         try {
-            extractAllClaims(token);
+            parseToken(token);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    // ✅ REQUIRED BY TESTS
+    // REQUIRED BY TESTS
     public boolean isTokenValid(String token, String username) {
         String extractedUsername = extractUsername(token);
         return extractedUsername.equals(username) && !isTokenExpired(token);
@@ -79,44 +80,42 @@ public class JwtUtil {
        CLAIM EXTRACTION
        ===================================================== */
 
-    // ✅ REQUIRED BY FILTER + TESTS
     public String extractUsername(String token) {
-        return extractAllClaims(token).getSubject();
+        return parseToken(token).getPayload().getSubject();
     }
 
     public String extractEmail(String token) {
-        return extractAllClaims(token).getSubject();
+        return extractUsername(token);
     }
 
     public String extractRole(String token) {
-        return extractAllClaims(token).get("role", String.class);
+        return parseToken(token).getPayload().get("role", String.class);
     }
 
-    // ✅ REQUIRED BY TESTS
     public Long extractUserId(String token) {
-        Object id = extractAllClaims(token).get("userId");
+        Object id = parseToken(token).getPayload().get("userId");
         return id == null ? null : Long.parseLong(id.toString());
     }
 
-    // ✅ REQUIRED BY TESTS
-    public Claims parseToken(String token) {
-        return extractAllClaims(token);
+    /* =====================================================
+       TOKEN PARSING (🔥 KEY FIX HERE)
+       ===================================================== */
+
+    // 🔥 MUST return Jws<Claims> (tests expect getPayload())
+    public Jws<Claims> parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
     }
 
     /* =====================================================
        INTERNAL HELPERS
        ===================================================== */
 
-    private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
-
     private boolean isTokenExpired(String token) {
-        return extractAllClaims(token)
+        return parseToken(token)
+                .getPayload()
                 .getExpiration()
                 .before(new Date());
     }
