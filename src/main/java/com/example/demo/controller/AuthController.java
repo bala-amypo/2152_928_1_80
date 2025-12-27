@@ -20,9 +20,7 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserAccountService userService,
-                          JwtUtil jwtUtil,
-                          PasswordEncoder passwordEncoder) {
+    public AuthController(UserAccountService userService,JwtUtil jwtUtil,PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
