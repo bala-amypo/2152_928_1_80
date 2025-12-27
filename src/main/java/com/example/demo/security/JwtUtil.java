@@ -17,7 +17,8 @@ public class JwtUtil {
     private SecretKey key;
 
     /* ================= INIT KEY ================= */
-    private void initKey() {
+    // Made public so external classes can call it if needed
+    public void initKey() {
         if (this.key == null) {
             this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         }
@@ -40,7 +41,7 @@ public class JwtUtil {
     }
 
     public String generateToken(Map<String, Object> claims, String username) {
-        initKey();
+        initKey(); // ensure key is initialized
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
@@ -85,7 +86,7 @@ public class JwtUtil {
 
     /* ================= PARSE TOKEN ================= */
     public Jws<Claims> parseToken(String token) {
-        initKey();
+        initKey(); // ensure key is initialized
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
