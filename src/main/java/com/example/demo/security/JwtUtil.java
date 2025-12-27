@@ -25,10 +25,11 @@ public class JwtUtil {
     /* ================= TOKEN GENERATION ================= */
     public String generateTokenForUser(UserAccount user) {
         initKey();
+
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole());
         claims.put("userId", user.getId());
-        claims.put("email", user.getEmail()); // ✅ FIX FOR t69
+        claims.put("email", user.getEmail()); // ✅ required
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -39,9 +40,12 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String generateToken(Map<String, Object> claims, String username) {
+    public String generateToken(Map<String, Object> inputClaims, String username) {
         initKey();
-        claims.putIfAbsent("email", username); // ✅ SAFETY FOR HIDDEN TESTS
+
+        // ✅ COPY into mutable map (CRITICAL FIX)
+        Map<String, Object> claims = new HashMap<>(inputClaims);
+        claims.put("email", username);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -63,8 +67,7 @@ public class JwtUtil {
     }
 
     public boolean isTokenValid(String token, String username) {
-        String extractedUsername = extractUsername(token);
-        return extractedUsername.equals(username) && !isTokenExpired(token);
+        return extractUsername(token).equals(username) && !isTokenExpired(token);
     }
 
     /* ================= CLAIM EXTRACTION ================= */
@@ -73,8 +76,7 @@ public class JwtUtil {
     }
 
     public String extractEmail(String token) {
-        Claims claims = parseToken(token).getPayload();
-        return claims.get("email", String.class);
+        return parseToken(token).getPayload().get("email", String.class);
     }
 
     public String extractRole(String token) {
@@ -89,6 +91,7 @@ public class JwtUtil {
     /* ================= PARSE TOKEN ================= */
     public JwtPayloadWrapper parseToken(String token) {
         initKey();
+
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
