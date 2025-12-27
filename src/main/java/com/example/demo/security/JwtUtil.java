@@ -3,6 +3,7 @@ package com.example.demo.security;
 import com.example.demo.entity.UserAccount;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
@@ -12,15 +13,16 @@ public class JwtUtil {
 
     private SecretKey key;
 
-    /* 🔐 Initialize secret key */
+    /* Initialize secret key */
     public void initKey() {
-        this.key = Keys.secretKeyFor(io.jsonwebtoken.SignatureAlgorithm.HS256);
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
-    /* ✅ GENERATE TOKEN USING USER ENTITY */
+    /* ================= TOKEN GENERATION ================= */
     public String generateTokenForUser(UserAccount user) {
         return Jwts.builder()
-                .setSubject(user.getUsername())
+                .setSubject(user.getEmail())          // ✅ EMAIL USED
+                .claim("role", user.getRole())        // ✅ ROLE ADDED
                 .setIssuedAt(new Date())
                 .setExpiration(
                         new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)
@@ -29,19 +31,22 @@ public class JwtUtil {
                 .compact();
     }
 
-    /* 🔍 Extract username */
-    public String extractUsername(String token) {
-        return extractClaims(token).getSubject();
-    }
-
-    /* ✅ Validate token */
+    /* ================= TOKEN VALIDATION ================= */
     public boolean validateToken(String token) {
-        extractClaims(token);
+        extractAllClaims(token);
         return true;
     }
 
-    /* 🔒 Internal claim extraction */
-    private Claims extractClaims(String token) {
+    /* ================= CLAIM EXTRACTION ================= */
+    public String extractEmail(String token) {
+        return extractAllClaims(token).getSubject();
+    }
+
+    public String extractRole(String token) {
+        return extractAllClaims(token).get("role", String.class);
+    }
+
+    private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()

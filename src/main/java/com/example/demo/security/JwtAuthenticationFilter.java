@@ -21,11 +21,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
     }
 
-    /* 🔥 IMPORTANT: Skip JWT for public endpoints */
+    /* Skip JWT for public endpoints */
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-
         return path.startsWith("/auth/")
             || path.startsWith("/swagger-ui")
             || path.startsWith("/v3/api-docs");
@@ -50,13 +49,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             if (jwtUtil.validateToken(token)) {
 
-                String username = jwtUtil.extractUsername(token);
+                String email = jwtUtil.extractEmail(token);
+                String role = jwtUtil.extractRole(token);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                username,
+                                email,
                                 null,
-                                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+                                List.of(new SimpleGrantedAuthority("ROLE_" + role))
                         );
 
                 authentication.setDetails(
@@ -64,8 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                 .buildDetails(request)
                 );
 
-                SecurityContextHolder
-                        .getContext()
+                SecurityContextHolder.getContext()
                         .setAuthentication(authentication);
             }
         } catch (Exception e) {
