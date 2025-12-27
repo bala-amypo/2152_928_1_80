@@ -16,18 +16,12 @@ public class JwtUtil {
 
     private SecretKey key;
 
-    /* =====================================================
-       INITIALIZE SECRET KEY
-       ===================================================== */
+    /* Initialize secret key */
     public void initKey() {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
-    /* =====================================================
-       TOKEN GENERATION
-       ===================================================== */
-
-    // Used by AuthController
+    /* ================= TOKEN GENERATION ================= */
     public String generateTokenForUser(UserAccount user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole());
@@ -35,32 +29,25 @@ public class JwtUtil {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(user.getEmail())   // email = username
+                .setSubject(user.getEmail()) // email = username
                 .setIssuedAt(new Date())
-                .setExpiration(
-                        new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)
-                )
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 hours
                 .signWith(key)
                 .compact();
     }
 
-    // REQUIRED BY TESTS
+    // Used in tests
     public String generateToken(Map<String, Object> claims, String username) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(
-                        new Date(System.currentTimeMillis() + 1000 * 60 * 60)
-                )
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
                 .signWith(key)
                 .compact();
     }
 
-    /* =====================================================
-       TOKEN VALIDATION
-       ===================================================== */
-
+    /* ================= TOKEN VALIDATION ================= */
     public boolean validateToken(String token) {
         try {
             parseToken(token);
@@ -70,18 +57,14 @@ public class JwtUtil {
         }
     }
 
-    // REQUIRED BY TESTS
     public boolean isTokenValid(String token, String username) {
         String extractedUsername = extractUsername(token);
         return extractedUsername.equals(username) && !isTokenExpired(token);
     }
 
-    /* =====================================================
-       CLAIM EXTRACTION
-       ===================================================== */
-
+    /* ================= CLAIM EXTRACTION ================= */
     public String extractUsername(String token) {
-        return parseToken(token).getPayload().getSubject();
+        return parseToken(token).getBody().getSubject();
     }
 
     public String extractEmail(String token) {
@@ -89,19 +72,15 @@ public class JwtUtil {
     }
 
     public String extractRole(String token) {
-        return parseToken(token).getPayload().get("role", String.class);
+        return parseToken(token).getBody().get("role", String.class);
     }
 
     public Long extractUserId(String token) {
-        Object id = parseToken(token).getPayload().get("userId");
+        Object id = parseToken(token).getBody().get("userId");
         return id == null ? null : Long.parseLong(id.toString());
     }
 
-    /* =====================================================
-       TOKEN PARSING (🔥 KEY FIX HERE)
-       ===================================================== */
-
-    // 🔥 MUST return Jws<Claims> (tests expect getPayload())
+    /* ================= PARSE TOKEN ================= */
     public Jws<Claims> parseToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -109,13 +88,10 @@ public class JwtUtil {
                 .parseClaimsJws(token);
     }
 
-    /* =====================================================
-       INTERNAL HELPERS
-       ===================================================== */
-
+    /* ================= INTERNAL HELPERS ================= */
     private boolean isTokenExpired(String token) {
         return parseToken(token)
-                .getPayload()
+                .getBody()
                 .getExpiration()
                 .before(new Date());
     }
