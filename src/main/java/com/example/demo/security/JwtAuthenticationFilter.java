@@ -5,62 +5,74 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-private final JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
-public JwtAuthenticationFilter(JwtUtil jwtUtil) {
-this.jwtUtil = jwtUtil;
-}
+    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
-@Override
-protected void doFilterInternal(
-HttpServletRequest request,
-HttpServletResponse response,
-FilterChain filterChain
-) throws ServletException, IOException {
+    /* 🔥 IMPORTANT: Skip JWT for public endpoints */
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
 
-String path = request.getRequestURI();
+        return path.startsWith("/auth/")
+            || path.startsWith("/swagger-ui")
+            || path.startsWith("/v3/api-docs");
+    }
 
-/* ✅ Skip JWT for public endpoints */
-if (
-path.startsWith("/auth/")
-|| path.startsWith("/v3/api-docs")
-|| path.startsWith("/swagger-ui")
-) {
-filterChain.doFilter(request, response);
-return;
-}
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
 
-String authHeader = request.getHeader("Authorization");
+        String authHeader = request.getHeader("Authorization");
 
-/* ✅ If no token, continue (Spring Security will handle access) */
-if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-filterChain.doFilter(request, response);
-return;
-}
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-String token = authHeader.substring(7);
+        String token = authHeader.substring(7);
 
-if (jwtUtil.validateToken(token)) {
-String username = jwtUtil.extractUsername(token);
+        try {
+            if (jwtUtil.validateToken(token)) {
 
-UsernamePasswordAuthenticationToken authentication =
-new UsernamePasswordAuthenticationToken(username, null, null);
+                String username = jwtUtil.extractUsername(token);
 
-authentication.setDetails(
-new WebAuthenticationDetailsSource().buildDetails(request)
-);
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                username,
+                                null,
+                                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+                        );
 
-SecurityContextHolder.getContext().setAuthentication(authentication);
-}
+                authentication.setDetails(
+                        new WebAuthenticationDetailsSource()
+                                .buildDetails(request)
+                );
 
-filterChain.doFilter(request, response);
-}
+                SecurityContextHolder
+                        .getContext()
+                        .setAuthentication(authentication);
+            }
+        } catch (Exception e) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        filterChain.doFilter(request, response);
+    }
 }
