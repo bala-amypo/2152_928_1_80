@@ -32,10 +32,10 @@ public class AuthController {
 
         UserAccount user = new UserAccount();
         user.setFullName(req.getName());
-user.setEmail(req.getEmail());
-user.setPassword(req.getPassword());
-user.setRole(req.getRole());
-user.setDepartment(req.getDepartment());
+        user.setEmail(req.getEmail());
+        user.setPassword(req.getPassword());
+        user.setRole(req.getRole());
+        user.setDepartment(req.getDepartment());
 
 
         UserAccount saved = userService.register(user);
@@ -45,9 +45,8 @@ user.setDepartment(req.getDepartment());
     @PostMapping("/login")
     @Operation(summary = "Login and generate JWT")
     public ApiResponse<String> login(@RequestBody LoginRequest req) {
-
         UserAccount user = userService.findByEmail(req.getEmail());
-if (!passwordEncoder.matches(req.getPassword(), user.getPassword()))  {
+        if (!passwordEncoder.matches(req.getPassword(), user.getPassword()))  {
             throw new RuntimeException("Invalid credentials");
         }
 
