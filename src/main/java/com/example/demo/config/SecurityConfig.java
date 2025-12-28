@@ -1,3 +1,12 @@
+package com.example.demo.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.http.SessionCreationPolicy;
+
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
@@ -9,20 +18,17 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
 
-                // Swagger & OpenAPI
                 .requestMatchers(
                     "/v3/api-docs/**",
                     "/swagger-ui/**",
                     "/swagger-ui.html"
                 ).permitAll()
 
-                // Auth endpoints
                 .requestMatchers(
                     "/auth/login",
                     "/auth/register"
                 ).permitAll()
 
-                // Everything else requires authentication
                 .requestMatchers("/api/**").authenticated()
 
                 .anyRequest().denyAll()

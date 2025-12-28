@@ -88,6 +88,11 @@
         <version>5.11.0</version>
         <scope>test</scope>
     </dependency>
+    <!-- Spring Security -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
 
     <!-- Mockito + TestNG -->
     <dependency>
