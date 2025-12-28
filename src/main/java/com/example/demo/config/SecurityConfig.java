@@ -21,21 +21,16 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-    /* ================= JWT UTIL ================= */
     @Bean
     public JwtUtil jwtUtil() {
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.initKey();
         return jwtUtil;
     }
-
-    /* ================= JWT FILTER ================= */
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
         return new JwtAuthenticationFilter(jwtUtil);
     }
-
-    /* ================= SECURITY FILTER CHAIN ================= */
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
@@ -49,8 +44,6 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-
-                /* 🔓 PUBLIC ENDPOINTS */
                 .requestMatchers(
                         "/",
                         "/auth/**",
@@ -84,8 +77,6 @@ public class SecurityConfig {
     ) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
-    /* ================= CORS CONFIG ================= */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
