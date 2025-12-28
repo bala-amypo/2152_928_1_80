@@ -21,6 +21,7 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
+    /* ================= JWT UTIL ================= */
     @Bean
     public JwtUtil jwtUtil() {
         JwtUtil jwtUtil = new JwtUtil();
@@ -28,11 +29,13 @@ public class SecurityConfig {
         return jwtUtil;
     }
 
+    /* ================= JWT FILTER ================= */
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
         return new JwtAuthenticationFilter(jwtUtil);
     }
 
+    /* ================= SECURITY FILTER CHAIN ================= */
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
@@ -46,17 +49,20 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-    .requestMatchers(
-        "/",
-        "/auth/login",
-        "/auth/register",
-        "/swagger-ui/**",
-        "/swagger-ui.html",
-        "/v3/api-docs/**"
-    ).permitAll()
-    .anyRequest().authenticated()
-);
 
+                /* 🔓 PUBLIC ENDPOINTS (ONLY THESE) */
+                .requestMatchers(
+                        "/",
+                        "/auth/login",
+                        "/auth/register",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/v3/api-docs/**"
+                ).permitAll()
+
+                /* 🔐 EVERYTHING ELSE NEEDS JWT */
+                .anyRequest().authenticated()
+            );
 
         http.addFilterBefore(
                 jwtAuthenticationFilter,
@@ -66,11 +72,13 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /* ================= PASSWORD ENCODER ================= */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /* ================= AUTH MANAGER ================= */
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration
@@ -78,6 +86,7 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
+    /* ================= CORS CONFIG ================= */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
