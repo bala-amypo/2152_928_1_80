@@ -1,16 +1,18 @@
 package com.example.demo.security;
 
-import com.example.demo.entity.UserAccount;
+import com.example.demo.model.UserAccount;   // ✅ FIX PACKAGE
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component; // ✅ REQUIRED
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component   // 🔴 THIS FIXES THE ERROR
 public class JwtUtil {
 
     private SecretKey key;
@@ -29,7 +31,7 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole());
         claims.put("userId", user.getId());
-        claims.put("email", user.getEmail()); // ✅ required
+        claims.put("email", user.getEmail());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -43,7 +45,6 @@ public class JwtUtil {
     public String generateToken(Map<String, Object> inputClaims, String username) {
         initKey();
 
-        // ✅ COPY into mutable map (CRITICAL FIX)
         Map<String, Object> claims = new HashMap<>(inputClaims);
         claims.put("email", username);
 
@@ -101,12 +102,12 @@ public class JwtUtil {
         return new JwtPayloadWrapper(claims);
     }
 
-    /* ================= GET PAYLOAD (FOR HIDDEN TESTS) ================= */
+    /* ================= GET PAYLOAD (FOR TESTS) ================= */
     public Claims getPayload(String token) {
         return parseToken(token).getPayload();
     }
 
-    /* ================= INTERNAL HELPERS ================= */
+    /* ================= INTERNAL ================= */
     private boolean isTokenExpired(String token) {
         return parseToken(token)
                 .getPayload()
