@@ -27,10 +27,12 @@ public class SecurityConfig {
         jwtUtil.initKey();
         return jwtUtil;
     }
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
         return new JwtAuthenticationFilter(jwtUtil);
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
@@ -44,6 +46,8 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
+
+                /* 🔓 PUBLIC */
                 .requestMatchers(
                         "/",
                         "/auth/**",
@@ -52,7 +56,7 @@ public class SecurityConfig {
                         "/v3/api-docs/**"
                 ).permitAll()
 
-                /* 🔐 PROTECTED ENDPOINTS */
+                /* 🔐 PROTECTED */
                 .anyRequest().authenticated()
             );
 
@@ -64,19 +68,18 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /* ================= PASSWORD ENCODER ================= */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /* ================= AUTH MANAGER ================= */
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration
     ) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
