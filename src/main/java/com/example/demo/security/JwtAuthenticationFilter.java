@@ -21,12 +21,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
     }
 
-    /* ================= SKIP JWT FOR PUBLIC ENDPOINTS ================= */
+    /* ================= SKIP JWT ONLY FOR PUBLIC ENDPOINTS ================= */
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
+
         return path.equals("/")
-            || path.startsWith("/auth/")
+            || path.equals("/auth/login")
+            || path.equals("/auth/register")
             || path.startsWith("/swagger-ui")
             || path.startsWith("/v3/api-docs");
     }
@@ -40,6 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
+        /* No token → let Spring Security decide */
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;

@@ -1,105 +1,36 @@
-package com.example.demo.config;
-
-import com.example.demo.security.JwtAuthenticationFilter;
-import com.example.demo.security.JwtUtil;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
-
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
-    /* ================= JWT UTIL ================= */
     @Bean
-    public JwtUtil jwtUtil() {
-        JwtUtil jwtUtil = new JwtUtil();
-        jwtUtil.initKey();
-        return jwtUtil;
-    }
-
-    /* ================= JWT FILTER ================= */
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil) {
-        return new JwtAuthenticationFilter(jwtUtil);
-    }
-
-    /* ================= SECURITY FILTER CHAIN ================= */
-    @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            JwtAuthenticationFilter jwtAuthenticationFilter
-    ) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
             .csrf(csrf -> csrf.disable())
-            .cors(cors -> {})
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
             .authorizeHttpRequests(auth -> auth
 
-                /* 🔓 PUBLIC ENDPOINTS (ONLY THESE) */
+                // Swagger & OpenAPI
                 .requestMatchers(
-                        "/",
-                        "/auth/login",
-                        "/auth/register",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/v3/api-docs/**"
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html"
                 ).permitAll()
 
-                /* 🔐 EVERYTHING ELSE NEEDS JWT */
-                .anyRequest().authenticated()
+                // Auth endpoints
+                .requestMatchers(
+                    "/auth/login",
+                    "/auth/register"
+                ).permitAll()
+
+                // Everything else requires authentication
+                .requestMatchers("/api/**").authenticated()
+
+                .anyRequest().denyAll()
+            )
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             );
 
-        http.addFilterBefore(
-                jwtAuthenticationFilter,
-                UsernamePasswordAuthenticationFilter.class
-        );
-
         return http.build();
-    }
-
-    /* ================= PASSWORD ENCODER ================= */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    /* ================= AUTH MANAGER ================= */
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration
-    ) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
-
-    /* ================= CORS CONFIG ================= */
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("*"));
-        config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-
-        return source;
     }
 }
