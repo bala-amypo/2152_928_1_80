@@ -10,9 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 @RestController
-@RequestMapping("/auth")
 @Tag(name = "Authentication")
 public class AuthController {
 
@@ -20,13 +18,19 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserAccountService userService,JwtUtil jwtUtil,PasswordEncoder passwordEncoder) {
+    public AuthController(
+            UserAccountService userService,
+            JwtUtil jwtUtil,
+            PasswordEncoder passwordEncoder
+    ) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/register")
+    /* ================= PUBLIC ================= */
+
+    @PostMapping("/auth/register")
     @Operation(summary = "Register new user")
     public ApiResponse<UserAccount> register(@RequestBody RegisterRequest req) {
 
@@ -37,22 +41,25 @@ public class AuthController {
         user.setRole(req.getRole());
         user.setDepartment(req.getDepartment());
 
-
         UserAccount saved = userService.register(user);
         return new ApiResponse<>(true, "User registered", saved);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     @Operation(summary = "Login and generate JWT")
     public ApiResponse<String> login(@RequestBody LoginRequest req) {
+
         UserAccount user = userService.findByEmail(req.getEmail());
-        if (!passwordEncoder.matches(req.getPassword(), user.getPassword()))  {
+
+        if (!passwordEncoder.matches(req.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
         String token = jwtUtil.generateTokenForUser(user);
         return new ApiResponse<>(true, "Login successful", token);
     }
+
+    /* ================= PROTECTED ================= */
 
     @GetMapping("/users")
     @Operation(summary = "Get all users (ADMIN only)")
