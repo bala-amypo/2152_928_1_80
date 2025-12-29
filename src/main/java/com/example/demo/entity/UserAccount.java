@@ -28,7 +28,7 @@ public class UserAccount {
 
     private LocalDateTime createdAt;
 
-    /* READ-ONLY relationship (SAFE) */
+    
     @OneToMany(mappedBy = "generator", fetch = FetchType.LAZY)
     private List<HarmonizedCalendar> calendars;
 
@@ -52,7 +52,7 @@ public class UserAccount {
         if (role == null) role = "REVIEWER";
     }
 
-    /* GETTERS */
+    
     public Long getId() { return id; }
     public String getFullName() { return fullName; }
     public String getEmail() { return email; }
@@ -62,7 +62,7 @@ public class UserAccount {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public List<HarmonizedCalendar> getCalendars() { return calendars; }
 
-    /* SETTERS */
+    
     public void setId(Long id) { this.id = id; }
     public void setFullName(String fullName) { this.fullName = fullName; }
     public void setEmail(String email) { this.email = email; }

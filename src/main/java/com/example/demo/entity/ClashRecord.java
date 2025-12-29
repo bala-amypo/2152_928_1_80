@@ -49,7 +49,7 @@ public class ClashRecord {
         if (resolved == null) resolved = false;
     }
 
-    /* GETTERS */
+   
     public Long getId() { return id; }
     public Long getEventAId() { return eventAId; }
     public Long getEventBId() { return eventBId; }
@@ -59,7 +59,7 @@ public class ClashRecord {
     public LocalDateTime getDetectedAt() { return detectedAt; }
     public Boolean getResolved() { return resolved; }
 
-    /* REQUIRED SETTERS (TESTS NEED THESE) */
+    
     public void setId(Long id) { this.id = id; }
     public void setEventAId(Long eventAId) { this.eventAId = eventAId; }
     public void setEventBId(Long eventBId) { this.eventBId = eventBId; }

@@ -49,7 +49,7 @@ public class HarmonizedCalendar {
         if (generatedAt == null) generatedAt = LocalDateTime.now();
     }
 
-    /* GETTERS */
+    
     public Long getId() { return id; }
     public String getTitle() { return title; }
     public String getGeneratedBy() { return generatedBy; }
@@ -58,7 +58,7 @@ public class HarmonizedCalendar {
     public LocalDate getEffectiveTo() { return effectiveTo; }
     public String getEventsJson() { return eventsJson; }
 
-    /* REQUIRED SETTERS */
+   
     public void setId(Long id) { this.id = id; }
     public void setTitle(String title) { this.title = title; }
     public void setGeneratedBy(String generatedBy) { this.generatedBy = generatedBy; }
