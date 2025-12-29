@@ -28,7 +28,7 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /* ================= PUBLIC ================= */
+    
 
     @PostMapping("/auth/register")
     @Operation(summary = "Register new user")
@@ -59,7 +59,7 @@ public class AuthController {
         return new ApiResponse<>(true, "Login successful", token);
     }
 
-    /* ================= PROTECTED ================= */
+    
 
     @GetMapping("/users")
     @Operation(summary = "Get all users (ADMIN only)")
