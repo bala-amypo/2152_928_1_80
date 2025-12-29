@@ -15,6 +15,7 @@ public class BranchProfile {
     private Long id;
 
     private String branchCode;
+    @NotBlank
     private String branchName;
     private String contactEmail;
 
