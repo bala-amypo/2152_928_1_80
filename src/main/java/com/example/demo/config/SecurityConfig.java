@@ -47,14 +47,13 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
 
-                /* 🔓 PUBLIC ENDPOINTS */
                 .requestMatchers(
                         "/auth/**",
                         "/swagger-ui/**",
                         "/v3/api-docs/**"
                 ).permitAll()
 
-                /* 🔐 PROTECTED ENDPOINTS */
+             
                 .anyRequest().authenticated()
             );
 
@@ -66,13 +65,13 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /* ================= PASSWORD ENCODER ================= */
+   
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /* ================= AUTH MANAGER ================= */
+    
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration
