@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.Size;
 import java.time.*;
 
 @Entity
@@ -14,10 +13,7 @@ public class AcademicEvent {
     private Long id;
 
     private Long branchId;
-
-    @Size(max = 255)
     private String title;
-
     private String eventType;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -25,7 +21,6 @@ public class AcademicEvent {
     private String description;
     private LocalDateTime submittedAt;
 
-    /* READ-ONLY relationship */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branchId", insertable = false, updatable = false)
     private BranchProfile branch;
@@ -52,8 +47,7 @@ public class AcademicEvent {
         if (submittedAt == null) submittedAt = LocalDateTime.now();
     }
 
-    /* SAFE validation */
-    @AssertTrue(message = "End date must not be before start date")
+    @AssertTrue
     public boolean isDateRangeValid() {
         if (startDate == null || endDate == null) return true;
         return !endDate.isBefore(startDate);
@@ -68,4 +62,14 @@ public class AcademicEvent {
     public String getLocation() { return location; }
     public String getDescription() { return description; }
     public LocalDateTime getSubmittedAt() { return submittedAt; }
+
+    public void setId(Long id) { this.id = id; }
+    public void setBranchId(Long branchId) { this.branchId = branchId; }
+    public void setTitle(String title) { this.title = title; }
+    public void setEventType(String eventType) { this.eventType = eventType; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+    public void setLocation(String location) { this.location = location; }
+    public void setDescription(String description) { this.description = description; }
+    public void setSubmittedAt(LocalDateTime submittedAt) { this.submittedAt = submittedAt; }
 }

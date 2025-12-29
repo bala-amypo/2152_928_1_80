@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +17,12 @@ public class BranchProfile {
     private Long id;
 
     private String branchCode;
-
-    @Size(max = 255)
     private String branchName;
-
     private String contactEmail;
 
     private LocalDateTime lastSyncAt;
     private Boolean active;
 
-    /* READ-ONLY relationship */
     @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
     private List<AcademicEvent> events = new ArrayList<>();
 
@@ -56,4 +51,11 @@ public class BranchProfile {
     public String getContactEmail() { return contactEmail; }
     public LocalDateTime getLastSyncAt() { return lastSyncAt; }
     public Boolean getActive() { return active; }
+
+    public void setId(Long id) { this.id = id; }
+    public void setBranchCode(String branchCode) { this.branchCode = branchCode; }
+    public void setBranchName(String branchName) { this.branchName = branchName; }
+    public void setContactEmail(String contactEmail) { this.contactEmail = contactEmail; }
+    public void setLastSyncAt(LocalDateTime lastSyncAt) { this.lastSyncAt = lastSyncAt; }
+    public void setActive(Boolean active) { this.active = active; }
 }

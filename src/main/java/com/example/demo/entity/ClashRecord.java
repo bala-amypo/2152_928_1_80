@@ -19,7 +19,6 @@ public class ClashRecord {
     private LocalDateTime detectedAt;
     private Boolean resolved;
 
-    /* READ-ONLY relationships */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "eventAId", insertable = false, updatable = false)
     private AcademicEvent eventA;
@@ -58,4 +57,6 @@ public class ClashRecord {
     public String getDetails() { return details; }
     public LocalDateTime getDetectedAt() { return detectedAt; }
     public Boolean getResolved() { return resolved; }
+
+    public void setResolved(Boolean resolved) { this.resolved = resolved; }
 }
