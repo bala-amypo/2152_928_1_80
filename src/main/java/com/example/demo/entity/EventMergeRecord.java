@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import java.time.*;
 
 @Entity
@@ -13,10 +12,7 @@ public class EventMergeRecord {
     private Long id;
 
     private String sourceEventIds;
-
-    @Size(max = 255)
     private String mergedTitle;
-
     private LocalDate mergedStartDate;
     private LocalDate mergedEndDate;
     private String mergeReason;
@@ -48,4 +44,10 @@ public class EventMergeRecord {
     public LocalDate getMergedEndDate() { return mergedEndDate; }
     public String getMergeReason() { return mergeReason; }
     public LocalDateTime getCreatedAt() { return createdAt; }
+
+    public void setSourceEventIds(String sourceEventIds) { this.sourceEventIds = sourceEventIds; }
+    public void setMergedTitle(String mergedTitle) { this.mergedTitle = mergedTitle; }
+    public void setMergedStartDate(LocalDate mergedStartDate) { this.mergedStartDate = mergedStartDate; }
+    public void setMergedEndDate(LocalDate mergedEndDate) { this.mergedEndDate = mergedEndDate; }
+    public void setMergeReason(String mergeReason) { this.mergeReason = mergeReason; }
 }

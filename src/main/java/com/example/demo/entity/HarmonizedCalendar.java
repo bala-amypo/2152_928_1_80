@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.Size;
 import java.time.*;
 
 @Entity
@@ -13,9 +12,7 @@ public class HarmonizedCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 255)
     private String title;
-
     private String generatedBy;
     private LocalDateTime generatedAt;
     private LocalDate effectiveFrom;
@@ -24,7 +21,6 @@ public class HarmonizedCalendar {
     @Lob
     private String eventsJson;
 
-    /* READ-ONLY relationship */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "generatedBy",
@@ -54,7 +50,6 @@ public class HarmonizedCalendar {
         if (generatedAt == null) generatedAt = LocalDateTime.now();
     }
 
-    /* SAFE validation */
     @AssertTrue
     public boolean isEffectiveWindowValid() {
         if (effectiveFrom == null || effectiveTo == null) return true;
@@ -68,4 +63,10 @@ public class HarmonizedCalendar {
     public LocalDate getEffectiveFrom() { return effectiveFrom; }
     public LocalDate getEffectiveTo() { return effectiveTo; }
     public String getEventsJson() { return eventsJson; }
+
+    public void setTitle(String title) { this.title = title; }
+    public void setGeneratedBy(String generatedBy) { this.generatedBy = generatedBy; }
+    public void setEffectiveFrom(LocalDate effectiveFrom) { this.effectiveFrom = effectiveFrom; }
+    public void setEffectiveTo(LocalDate effectiveTo) { this.effectiveTo = effectiveTo; }
+    public void setEventsJson(String eventsJson) { this.eventsJson = eventsJson; }
 }
