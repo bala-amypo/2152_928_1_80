@@ -24,7 +24,7 @@ return new OpenAPI()
 )
 .addServersItem(
 new Server()
-.url("https://9166.408procr.amypo.ai/")
+.url("https://9092.408procr.amypo.ai/")
 .description("Production Server")
 )
 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
