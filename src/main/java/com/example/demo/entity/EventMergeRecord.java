@@ -37,6 +37,7 @@ public class EventMergeRecord {
         if (createdAt == null) createdAt = LocalDateTime.now();
     }
 
+    /* GETTERS */
     public Long getId() { return id; }
     public String getSourceEventIds() { return sourceEventIds; }
     public String getMergedTitle() { return mergedTitle; }
@@ -45,6 +46,8 @@ public class EventMergeRecord {
     public String getMergeReason() { return mergeReason; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 
+    /* REQUIRED SETTERS */
+    public void setId(Long id) { this.id = id; }
     public void setSourceEventIds(String sourceEventIds) { this.sourceEventIds = sourceEventIds; }
     public void setMergedTitle(String mergedTitle) { this.mergedTitle = mergedTitle; }
     public void setMergedStartDate(LocalDate mergedStartDate) { this.mergedStartDate = mergedStartDate; }
