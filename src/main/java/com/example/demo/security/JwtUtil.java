@@ -15,14 +15,14 @@ public class JwtUtil {
 
     private SecretKey key;
 
-    /* ================= INIT KEY ================= */
+    
     public void initKey() {
         if (this.key == null) {
             this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         }
     }
 
-    /* ================= TOKEN GENERATION ================= */
+   
     public String generateTokenForUser(UserAccount user) {
         initKey();
 
@@ -43,7 +43,7 @@ public class JwtUtil {
     public String generateToken(Map<String, Object> inputClaims, String username) {
         initKey();
 
-        // ✅ COPY into mutable map (CRITICAL FIX)
+       
         Map<String, Object> claims = new HashMap<>(inputClaims);
         claims.put("email", username);
 
@@ -56,7 +56,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    /* ================= TOKEN VALIDATION ================= */
+   
     public boolean validateToken(String token) {
         try {
             parseToken(token);
@@ -70,7 +70,7 @@ public class JwtUtil {
         return extractUsername(token).equals(username) && !isTokenExpired(token);
     }
 
-    /* ================= CLAIM EXTRACTION ================= */
+    
     public String extractUsername(String token) {
         return parseToken(token).getPayload().getSubject();
     }
@@ -88,7 +88,7 @@ public class JwtUtil {
         return id == null ? null : Long.parseLong(id.toString());
     }
 
-    /* ================= PARSE TOKEN ================= */
+    
     public JwtPayloadWrapper parseToken(String token) {
         initKey();
 
@@ -101,12 +101,12 @@ public class JwtUtil {
         return new JwtPayloadWrapper(claims);
     }
 
-    /* ================= GET PAYLOAD (FOR HIDDEN TESTS) ================= */
+    
     public Claims getPayload(String token) {
         return parseToken(token).getPayload();
     }
 
-    /* ================= INTERNAL HELPERS ================= */
+    
     private boolean isTokenExpired(String token) {
         return parseToken(token)
                 .getPayload()
