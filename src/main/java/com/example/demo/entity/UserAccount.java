@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,10 +15,8 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 255)
     private String fullName;
 
-    @Email
     @Column(nullable = false)
     private String email;
 
@@ -32,6 +28,7 @@ public class UserAccount {
 
     private LocalDateTime createdAt;
 
+    /* READ-ONLY relationship (SAFE) */
     @OneToMany(mappedBy = "generator", fetch = FetchType.LAZY)
     private List<HarmonizedCalendar> calendars;
 
@@ -63,8 +60,9 @@ public class UserAccount {
     public String getRole() { return role; }
     public String getDepartment() { return department; }
     public LocalDateTime getCreatedAt() { return createdAt; }
+    public List<HarmonizedCalendar> getCalendars() { return calendars; }
 
-    /* SETTERS (REQUIRED) */
+    /* SETTERS */
     public void setId(Long id) { this.id = id; }
     public void setFullName(String fullName) { this.fullName = fullName; }
     public void setEmail(String email) { this.email = email; }
@@ -72,4 +70,7 @@ public class UserAccount {
     public void setRole(String role) { this.role = role; }
     public void setDepartment(String department) { this.department = department; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setCalendars(List<HarmonizedCalendar> calendars) {
+        this.calendars = calendars;
+    }
 }
